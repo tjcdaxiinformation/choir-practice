@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>前山牧區聯合詩班獻詩曲目</title>
+    <title>前山牧區聯合詩班 - 傳台百年音樂會</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -14,175 +14,199 @@
             background-color: #f1f5f9;
         }
         
-        .serif {
-            font-family: 'Noto Serif TC', serif;
-        }
-
-        .card-zoom {
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .card-zoom:hover {
-            transform: scale(1.02);
-        }
+        .serif { font-family: 'Noto Serif TC', serif; }
 
         .btn-part {
-            @apply flex flex-col items-center justify-center p-5 rounded-2xl text-white transition-all duration-200 shadow-lg active:scale-90 hover:brightness-110;
+            @apply flex flex-col items-center justify-center p-4 rounded-2xl text-white transition-all duration-200 shadow-md active:scale-95 hover:brightness-110;
         }
 
-        /* 隱藏滾動條但保持功能 */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        .schedule-item {
+            @apply flex items-center justify-between p-4 bg-white rounded-xl border-l-4 transition-all;
         }
+        
+        .completed { @apply border-l-emerald-500 opacity-60; }
+        .upcoming { @apply border-l-blue-500 shadow-sm; }
+        .highlight { @apply border-l-amber-500 ring-2 ring-amber-200; }
     </style>
 </head>
-<body class="pb-16">
+<body class="pb-20">
 
-    <!-- 頂部標題區 -->
-    <header class="bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white py-14 px-6 text-center shadow-2xl relative overflow-hidden">
+    <!-- 頂部標題與倒數計時 -->
+    <header class="bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white py-12 px-6 text-center shadow-2xl relative overflow-hidden">
         <div class="relative z-10">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4 serif tracking-widest">前山牧區聯合詩班</h1>
-            <p class="text-blue-100 text-lg md:text-xl font-light">獻詩曲目自主練習系統</p>
-            <div class="mt-6 inline-flex items-center bg-white/10 backdrop-blur-md px-5 py-2 rounded-full text-sm border border-white/20">
-                <i class="fas fa-music mr-2 animate-pulse"></i>
-                點選各聲部按鈕連結至影片複習
+            <h1 class="text-3xl md:text-5xl font-bold mb-3 serif tracking-widest">前山牧區聯合詩班</h1>
+            <p class="text-blue-200 text-lg md:text-xl font-light mb-6">真耶穌教會傳台百年西區音樂會獻詩</p>
+            
+            <!-- 倒數計時 -->
+            <div class="inline-flex space-x-4 bg-black/30 backdrop-blur-md p-4 rounded-3xl border border-white/10">
+                <div class="text-center">
+                    <span id="days" class="text-3xl md:text-4xl font-bold text-amber-400">---</span>
+                    <p class="text-xs uppercase opacity-70">Days to D-Day</p>
+                </div>
+                <div class="border-l border-white/20 h-10 self-center"></div>
+                <div class="text-left flex flex-col justify-center">
+                    <p class="text-sm font-bold">2026 / 11 / 01</p>
+                    <p class="text-xs opacity-70">音樂會獻詩當日</p>
+                </div>
             </div>
-        </div>
-        <!-- 裝飾背景 -->
-        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-            <i class="fas fa-notes-medical absolute -top-10 -left-10 text-9xl"></i>
-            <i class="fas fa-clef absolute -bottom-10 -right-10 text-9xl rotate-12"></i>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 mt-10 space-y-10">
-        
-        <!-- 第一首詩歌 -->
-        <section class="card-zoom bg-white rounded-3xl p-8 shadow-xl border border-blue-50">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 border-b border-gray-100 pb-4">
-                <div class="flex items-center">
-                    <div class="bg-blue-600 text-white w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-xl shadow-lg mr-4">1</div>
-                    <div>
-                        <h2 class="text-2xl md:text-3xl font-black text-gray-800 serif">讚美詩 370 首</h2>
-                        <p class="text-blue-600 font-bold text-lg">主幫助我們</p>
-                    </div>
+    <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
+
+        <!-- 1. 練習時程與進度 -->
+        <section class="bg-white rounded-3xl p-6 shadow-xl">
+            <div class="flex items-center justify-between mb-6 border-b pb-4">
+                <h2 class="text-2xl font-bold text-gray-800 serif flex items-center">
+                    <i class="fas fa-calendar-check text-blue-600 mr-3"></i>練習時程表
+                </h2>
+                <div class="text-right">
+                    <p class="text-sm font-bold text-blue-600">崎頂教會 19:00 - 21:00</p>
+                    <p class="text-[10px] text-gray-400 uppercase">Monthly 3rd Sabbath Night</p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
-                <a href="https://youtu.be/NHlQP3GaK1k?si=RAbs_lHtX7iaKVeZ" target="_blank" class="btn-part bg-gradient-to-br from-rose-400 to-rose-600">
-                    <i class="fas fa-microphone-alt text-3xl mb-3"></i>
-                    <span class="font-bold text-lg">女高音</span>
-                    <span class="text-xs opacity-75 tracking-tighter mt-1">SOPRANO</span>
-                </a>
-                <a href="https://youtu.be/JMyaAtRuIqE?si=ByMf0G7BOEQx10zs" target="_blank" class="btn-part bg-gradient-to-br from-amber-400 to-orange-600">
-                    <i class="fas fa-microphone-alt text-3xl mb-3"></i>
-                    <span class="font-bold text-lg">女低音</span>
-                    <span class="text-xs opacity-75 tracking-tighter mt-1">ALTO</span>
-                </a>
-                <a href="https://youtu.be/Qei3S0IJNqs?si=rTL_sFrnSKuIimTx" target="_blank" class="btn-part bg-gradient-to-br from-sky-400 to-blue-600">
-                    <i class="fas fa-microphone-alt text-3xl mb-3"></i>
-                    <span class="font-bold text-lg">男高音</span>
-                    <span class="text-xs opacity-75 tracking-tighter mt-1">TENOR</span>
-                </a>
-                <a href="https://youtu.be/jOa7HGTtoLI?si=iX4XaVCLNfO2p50Yw" target="_blank" class="btn-part bg-gradient-to-br from-indigo-500 to-indigo-800">
-                    <i class="fas fa-microphone-alt text-3xl mb-3"></i>
-                    <span class="font-bold text-lg">男低音</span>
-                    <span class="text-xs opacity-75 tracking-tighter mt-1">BASS</span>
-                </a>
+            <div class="space-y-3" id="schedule-list">
+                <!-- 已完成 -->
+                <div class="schedule-item completed">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-emerald-500 mr-4 text-xl"></i>
+                        <div>
+                            <p class="text-gray-500 font-bold">04 / 11 (已完成)</p>
+                            <p class="text-xs text-gray-400">練習曲目：主幫助我們</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item completed">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-emerald-500 mr-4 text-xl"></i>
+                        <div>
+                            <p class="text-gray-500 font-bold">05 / 09 (已完成)</p>
+                            <p class="text-xs text-gray-400">練習曲目：你為什忙</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 待練習 -->
+                <!-- 格式: 日期, 月份, 日, 標記 -->
+                <script>
+                    const upcomingDates = [
+                        { m: '06', d: '27', label: '預排練習' },
+                        { m: '07', d: '18', label: '預排練習' },
+                        { m: '08', d: '15', label: '預排練習' },
+                        { m: '09', d: '19', label: '預排練習' },
+                        { m: '10', d: '17', label: '預排練習' },
+                        { m: '10', d: '31', label: '音樂會前最後總練', special: true }
+                    ];
+
+                    upcomingDates.forEach(item => {
+                        document.write(`
+                            <div class="schedule-item upcoming ${item.special ? 'highlight' : ''}">
+                                <div class="flex items-center">
+                                    <div class="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 text-sm">
+                                        ${item.m}
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-800 font-bold">${item.m} / ${item.d} (六)</p>
+                                        <p class="text-xs ${item.special ? 'text-amber-600 font-bold' : 'text-gray-400'}">${item.label}</p>
+                                    </div>
+                                </div>
+                                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=前山牧區聯合詩班練詩&dates=2026${item.m}${item.d}T190000/2026${item.m}${item.d}T210000&details=傳台百年音樂會練習&location=崎頂教會" 
+                                   target="_blank" 
+                                   class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-600 hover:text-white transition-colors">
+                                    <i class="fas fa-plus mr-1"></i>日曆
+                                </a>
+                            </div>
+                        `);
+                    });
+                </script>
             </div>
         </section>
 
-        <!-- 第二首詩歌 -->
-        <section class="card-zoom bg-white rounded-3xl p-8 shadow-xl border border-purple-50">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 border-b border-gray-100 pb-4">
-                <div class="flex items-center">
-                    <div class="bg-purple-600 text-white w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-xl shadow-lg mr-4">2</div>
-                    <div>
-                        <h2 class="text-2xl md:text-3xl font-black text-gray-800 serif">讚美詩 130 首</h2>
-                        <p class="text-purple-600 font-bold text-lg">你為什忙</p>
+        <!-- 2. 分部練習影片 (原有功能) -->
+        <section class="bg-white rounded-3xl p-6 shadow-xl">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 serif border-b pb-4">
+                <i class="fas fa-play-circle text-rose-500 mr-3"></i>分部練習連結
+            </h2>
+            
+            <div class="space-y-8">
+                <!-- 第一首 -->
+                <div>
+                    <h3 class="font-bold text-blue-800 mb-4 flex items-center">
+                        <span class="bg-blue-800 text-white w-6 h-6 rounded-md flex items-center justify-center text-xs mr-2">1</span>
+                        讚美詩 370 首：主幫助我們
+                    </h3>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <a href="https://youtu.be/NHlQP3GaK1k?si=RAbs_lHtX7iaKVeZ" target="_blank" class="btn-part bg-rose-500">
+                            <span class="font-bold text-sm">女高音 Soprano</span>
+                        </a>
+                        <a href="https://youtu.be/JMyaAtRuIqE?si=ByMf0G7BOEQx10zs" target="_blank" class="btn-part bg-amber-500">
+                            <span class="font-bold text-sm">女低音 Alto</span>
+                        </a>
+                        <a href="https://youtu.be/Qei3S0IJNqs?si=rTL_sFrnSKuIimTx" target="_blank" class="btn-part bg-sky-500">
+                            <span class="font-bold text-sm">男高音 Tenor</span>
+                        </a>
+                        <a href="https://youtu.be/jOa7HGTtoLI?si=iX4XaVCLNfO2p50Yw" target="_blank" class="btn-part bg-slate-700">
+                            <span class="font-bold text-sm">男低音 Bass</span>
+                        </a>
                     </div>
                 </div>
-            </div>
 
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
-                <button onclick="showWaitMsg('女高音')" class="btn-part bg-gray-100 text-gray-400 border border-gray-200">
-                    <i class="fas fa-video-slash text-3xl mb-3"></i>
-                    <span class="font-bold text-lg text-gray-500">女高音</span>
-                    <span class="text-xs opacity-75 mt-1 font-medium">更新中</span>
-                </button>
-                <button onclick="showWaitMsg('女低音')" class="btn-part bg-gray-100 text-gray-400 border border-gray-200">
-                    <i class="fas fa-video-slash text-3xl mb-3"></i>
-                    <span class="font-bold text-lg text-gray-500">女低音</span>
-                    <span class="text-xs opacity-75 mt-1 font-medium">更新中</span>
-                </button>
-                <button onclick="showWaitMsg('男高音')" class="btn-part bg-gray-100 text-gray-400 border border-gray-200">
-                    <i class="fas fa-video-slash text-3xl mb-3"></i>
-                    <span class="font-bold text-lg text-gray-500">男高音</span>
-                    <span class="text-xs opacity-75 mt-1 font-medium">更新中</span>
-                </button>
-                <button onclick="showWaitMsg('男低音')" class="btn-part bg-gray-100 text-gray-400 border border-gray-200">
-                    <i class="fas fa-video-slash text-3xl mb-3"></i>
-                    <span class="font-bold text-lg text-gray-500">男低音</span>
-                    <span class="text-xs opacity-75 mt-1 font-medium">更新中</span>
-                </button>
+                <!-- 第二首 -->
+                <div>
+                    <h3 class="font-bold text-purple-800 mb-4 flex items-center">
+                        <span class="bg-purple-800 text-white w-6 h-6 rounded-md flex items-center justify-center text-xs mr-2">2</span>
+                        讚美詩 130 首：你為什忙
+                    </h3>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <button onclick="alert('影片製作中')" class="btn-part bg-gray-200 text-gray-400"><span class="text-sm font-bold">女高音</span></button>
+                        <button onclick="alert('影片製作中')" class="btn-part bg-gray-200 text-gray-400"><span class="text-sm font-bold">女低音</span></button>
+                        <button onclick="alert('影片製作中')" class="btn-part bg-gray-200 text-gray-400"><span class="text-sm font-bold">男高音</span></button>
+                        <button onclick="alert('影片製作中')" class="btn-part bg-gray-200 text-gray-400"><span class="text-sm font-bold">男低音</span></button>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- 管理區 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-gradient-to-br from-emerald-500 to-teal-700 rounded-3xl p-8 text-white shadow-xl">
-                <h3 class="text-xl font-bold mb-3 flex items-center serif">
-                    <i class="fas fa-cloud-upload-alt mr-3"></i>
-                    練習影片上傳
-                </h3>
-                <p class="text-emerald-100 text-sm mb-6 leading-relaxed">
-                    供指揮、司琴參考，調整出最和諧、口唱心和讚美神的聲音。
-                </p>
-                <button onclick="document.getElementById('file-input').click()" class="w-full bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/40 py-3 rounded-xl font-bold transition-all">
-                    選擇檔案
+        <!-- 3. 最後練習成果錄影 -->
+        <section class="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl">
+            <h2 class="text-2xl font-bold mb-6 serif text-amber-400 flex items-center">
+                <i class="fas fa-video mr-3"></i>最新練詩成果紀錄
+            </h2>
+            <div class="bg-white/10 rounded-2xl aspect-video flex flex-col items-center justify-center border border-white/20">
+                <i class="fas fa-file-video text-5xl mb-4 opacity-30"></i>
+                <p class="text-sm text-white/50 mb-4">尚未上傳本次練習錄影</p>
+                <button onclick="document.getElementById('video-up').click()" class="bg-amber-500 hover:bg-amber-600 text-black px-6 py-2 rounded-full font-bold transition-all">
+                    上傳練詩成果影音
                 </button>
-                <input type="file" id="file-input" class="hidden">
+                <input type="file" id="video-up" class="hidden" accept="video/*,audio/*">
             </div>
-
-            <div class="bg-slate-800 rounded-3xl p-8 text-white shadow-xl flex flex-col justify-center">
-                <div class="flex items-center mb-4">
-                    <div class="bg-amber-500 p-3 rounded-xl mr-4 text-2xl">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h4 class="text-lg font-bold">溫馨提示</h4>
-                </div>
-                <p class="text-slate-400 text-sm italic">
-                    「當用各樣的智慧，把基督的道理豐豐富富的存在心裡，用詩章、頌詞、靈歌，彼此教導，互相勸戒，口唱心和的讚美神。」
-                </p>
-            </div>
-        </div>
+            <p class="text-xs text-amber-400/60 mt-4 text-center italic">
+                * 錄音/影音將供指揮、司琴與班員參考，用以調整和諧度與強弱表現。
+            </p>
+        </section>
 
     </main>
 
-    <footer class="mt-16 text-center">
-        <p class="text-gray-500 font-medium tracking-widest uppercase text-xs">前山牧區聯合詩班 © 練習專用</p>
+    <footer class="mt-12 mb-8 text-center px-6">
+        <p class="text-gray-400 text-xs serif">願神悅納我們所獻上的頌讚</p>
+        <p class="text-gray-300 text-[10px] uppercase mt-1 tracking-widest">TJC 100th Anniversary Music Concert</p>
     </footer>
 
-    <!-- 通知元件 -->
-    <div id="alert-box" class="fixed top-10 left-1/2 -translate-x-1/2 z-50 bg-white border-l-4 border-blue-500 p-4 shadow-2xl rounded-r-xl transition-all duration-300 opacity-0 pointer-events-none translate-y-[-20px]">
-        <div class="flex items-center">
-            <i class="fas fa-info-circle text-blue-500 mr-3 text-xl"></i>
-            <span id="alert-text" class="text-gray-700 font-bold"></span>
-        </div>
-    </div>
-
     <script>
-        function showWaitMsg(part) {
-            const box = document.getElementById('alert-box');
-            const text = document.getElementById('alert-text');
-            text.innerText = `${part}練習影片尚未上傳，請稍候。`;
-            box.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
-            
-            setTimeout(() => {
-                box.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
-            }, 3000);
+        // 倒數計時邏輯
+        function updateCountdown() {
+            const targetDate = new Date('November 1, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById('days').innerText = days > 0 ? days : 0;
         }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>
