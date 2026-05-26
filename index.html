@@ -7,11 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
         
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: #f1f5f9;
+            background-color: #f8fafc;
         }
         
         .serif { font-family: 'Noto Serif TC', serif; }
@@ -27,95 +27,127 @@
         .completed { @apply border-l-emerald-500 opacity-60; }
         .upcoming { @apply border-l-blue-500 shadow-sm; }
         .highlight { @apply border-l-amber-500 ring-2 ring-amber-200; }
+
+        /* 旋律波浪起動畫 */
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.3); }
+            50% { transform: scaleY(1); }
+        }
+        .bar {
+            display: inline-block;
+            width: 3px;
+            height: 20px;
+            background-color: currentColor;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+        .bar:nth-child(2) { animation-delay: 0.15s; }
+        .bar:nth-child(3) { animation-delay: 0.3s; }
+        .bar:nth-child(4) { animation-delay: 0.45s; }
     </style>
 </head>
-<body class="pb-20">
+<body class="pb-24">
 
     <!-- 頂部標題與倒數計時 -->
-    <header class="bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white py-12 px-6 text-center shadow-2xl relative overflow-hidden">
-        <div class="relative z-10">
-            <h1 class="text-3xl md:text-5xl font-bold mb-3 serif tracking-widest">前山牧區聯合詩班</h1>
-            <p class="text-blue-200 text-lg md:text-xl font-light mb-6">真耶穌教會傳台百年西區音樂會獻詩</p>
+    <header class="bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white py-14 px-6 text-center shadow-2xl relative overflow-hidden">
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">
+                TJC 傳台百年音樂會
+            </span>
+            <h1 class="text-3xl md:text-5xl font-black mb-3 serif tracking-widest leading-tight">前山牧區聯合詩班</h1>
+            <p class="text-blue-200 text-lg md:text-xl font-light mb-8">西區音樂會獻詩練習專用平台</p>
             
             <!-- 倒數計時 -->
-            <div class="inline-flex space-x-4 bg-black/30 backdrop-blur-md p-4 rounded-3xl border border-white/10">
+            <div class="inline-flex items-center space-x-6 bg-white/5 backdrop-blur-lg px-8 py-5 rounded-3xl border border-white/10 shadow-inner">
                 <div class="text-center">
-                    <span id="days" class="text-3xl md:text-4xl font-bold text-amber-400">---</span>
-                    <p class="text-xs uppercase opacity-70">Days to D-Day</p>
+                    <span id="days" class="text-4xl md:text-5xl font-black text-amber-400 tracking-tight">---</span>
+                    <p class="text-[10px] uppercase tracking-widest text-blue-200/60 mt-1">Days remaining</p>
                 </div>
-                <div class="border-l border-white/20 h-10 self-center"></div>
-                <div class="text-left flex flex-col justify-center">
-                    <p class="text-sm font-bold">2026 / 11 / 01</p>
-                    <p class="text-xs opacity-70">音樂會獻詩當日</p>
+                <div class="border-l border-white/10 h-12"></div>
+                <div class="text-left">
+                    <p class="text-sm font-bold text-white/90">2026 年 11 月 01 日</p>
+                    <p class="text-xs text-amber-300 font-semibold mt-0.5">真耶穌教會西區音樂會獻詩</p>
                 </div>
             </div>
+        </div>
+        <!-- 裝飾用背景音符 -->
+        <div class="absolute inset-0 opacity-5 flex items-center justify-between px-10 pointer-events-none select-none">
+            <i class="fas fa-music text-9xl -rotate-12"></i>
+            <i class="fas fa-gclef text-9xl rotate-12"></i>
         </div>
     </header>
 
     <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
 
         <!-- 1. 練習時程與進度 -->
-        <section class="bg-white rounded-3xl p-6 shadow-xl">
-            <div class="flex items-center justify-between mb-6 border-b pb-4">
-                <h2 class="text-2xl font-bold text-gray-800 serif flex items-center">
-                    <i class="fas fa-calendar-check text-blue-600 mr-3"></i>練習時程表
-                </h2>
-                <div class="text-right">
-                    <p class="text-sm font-bold text-blue-600">崎頂教會 19:00 - 21:00</p>
-                    <p class="text-[10px] text-gray-400 uppercase">Monthly 3rd Sabbath Night</p>
+        <section class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 border-b pb-4 gap-4">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 text-blue-700 w-10 h-10 rounded-xl flex items-center justify-center mr-3">
+                        <i class="fas fa-calendar-alt text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 serif">練習時程與進度表</h2>
+                        <p class="text-xs text-gray-400 mt-0.5">每月第三周 安息日晚上 19:00 - 21:00</p>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border border-blue-100 text-blue-700 px-4 py-2 rounded-2xl text-right">
+                    <span class="block text-xs font-semibold opacity-80">固定練習地點</span>
+                    <span class="text-sm font-bold"><i class="fas fa-map-marker-alt mr-1"></i>崎頂教會</span>
                 </div>
             </div>
 
-            <div class="space-y-3" id="schedule-list">
+            <!-- 進度清單 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="schedule-list">
                 <!-- 已完成 -->
                 <div class="schedule-item completed">
                     <div class="flex items-center">
                         <i class="fas fa-check-circle text-emerald-500 mr-4 text-xl"></i>
                         <div>
-                            <p class="text-gray-500 font-bold">04 / 11 (已完成)</p>
-                            <p class="text-xs text-gray-400">練習曲目：主幫助我們</p>
+                            <p class="text-gray-500 font-bold">04 / 11 (六) <span class="text-xs font-normal">安息日晚上</span></p>
+                            <p class="text-xs text-gray-400 font-medium">練習：主幫助我們（全曲與分部熟悉）</p>
                         </div>
                     </div>
+                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">已完成</span>
                 </div>
 
                 <div class="schedule-item completed">
                     <div class="flex items-center">
                         <i class="fas fa-check-circle text-emerald-500 mr-4 text-xl"></i>
                         <div>
-                            <p class="text-gray-500 font-bold">05 / 09 (已完成)</p>
-                            <p class="text-xs text-gray-400">練習曲目：你為什忙</p>
+                            <p class="text-gray-500 font-bold">05 / 09 (六) <span class="text-xs font-normal">安息日晚上</span></p>
+                            <p class="text-xs text-gray-400 font-medium">練習：你為什忙（結構與速度練習）</p>
                         </div>
                     </div>
+                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">已完成</span>
                 </div>
 
-                <!-- 待練習 -->
-                <!-- 格式: 日期, 月份, 日, 標記 -->
+                <!-- 待練習 (使用 JS 動態渲染或靜態直觀列出) -->
                 <script>
                     const upcomingDates = [
-                        { m: '06', d: '20', label: '預排練習' },
-                        { m: '07', d: '18', label: '預排練習' },
-                        { m: '08', d: '15', label: '預排練習' },
-                        { m: '09', d: '19', label: '預排練習' },
-                        { m: '10', d: '17', label: '預排練習' },
-                        { m: '10', d: '31', label: '音樂會前最後總練', special: true }
+                        { m: '06', d: '27', label: '預排練習', desc: '雙曲調和度與發聲練習' },
+                        { m: '07', d: '18', label: '預排練習', desc: '細部強弱與呼吸配合' },
+                        { m: '08', d: '15', label: '預排練習', desc: '背譜演練與聲部和諧' },
+                        { m: '09', d: '19', label: '預排練習', desc: '表情記號與指揮默契' },
+                        { m: '10', d: '17', label: '預排練習', desc: '模擬獻詩站位與入退場' },
+                        { m: '10', d: '31', label: '最後總練', desc: '音樂會前崎頂教會最後加強', special: true }
                     ];
 
                     upcomingDates.forEach(item => {
                         document.write(`
                             <div class="schedule-item upcoming ${item.special ? 'highlight' : ''}">
-                                <div class="flex items-center">
-                                    <div class="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 text-sm">
+                                <div class="flex items-center min-w-0">
+                                    <div class="${item.special ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'} w-10 h-10 rounded-xl flex items-center justify-center font-black mr-4 text-sm shrink-0">
                                         ${item.m}
                                     </div>
-                                    <div>
+                                    <div class="truncate">
                                         <p class="text-gray-800 font-bold">${item.m} / ${item.d} (六)</p>
-                                        <p class="text-xs ${item.special ? 'text-amber-600 font-bold' : 'text-gray-400'}">${item.label}</p>
+                                        <p class="text-xs ${item.special ? 'text-amber-700 font-bold' : 'text-gray-400'} truncate">${item.desc}</p>
                                     </div>
                                 </div>
-                                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=前山牧區聯合詩班練詩&dates=2026${item.m}${item.d}T190000/2026${item.m}${item.d}T210000&details=傳台百年音樂會練習&location=崎頂教會" 
+                                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=【前山牧區聯合詩班】練詩提醒&dates=2026${item.m}${item.d}T190000/2026${item.m}${item.d}T210000&details=傳台百年音樂會獻詩練習。時間：19:00-21:00。地點：崎頂教會。請準時出席並攜帶詩譜。&location=崎頂教會" 
                                    target="_blank" 
-                                   class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-600 hover:text-white transition-colors">
-                                    <i class="fas fa-plus mr-1"></i>日曆
+                                   class="ml-2 bg-blue-50 text-blue-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-blue-600 hover:text-white transition-all shrink-0 flex items-center gap-1 active:scale-95">
+                                    <i class="fab fa-google"></i>日曆
                                 </a>
                             </div>
                         `);
@@ -124,78 +156,244 @@
             </div>
         </section>
 
-        <!-- 2. 分部練習影片 (原有功能) -->
-        <section class="bg-white rounded-3xl p-6 shadow-xl">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 serif border-b pb-4">
-                <i class="fas fa-play-circle text-rose-500 mr-3"></i>分部練習連結
+
+        <!-- 2. 分部練習影片與詩譜下載 -->
+        <section class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 serif border-b pb-4 flex items-center justify-between">
+                <span class="flex items-center">
+                    <i class="fas fa-play-circle text-indigo-600 mr-3"></i>獻詩曲目自主練習
+                </span>
+                <span class="text-xs font-medium text-slate-400 italic">點選看譜 / 分部影片重複練習</span>
             </h2>
             
-            <div class="space-y-8">
+            <div class="space-y-10">
                 <!-- 第一首 -->
-                <div>
-                    <h3 class="font-bold text-blue-800 mb-4 flex items-center">
-                        <span class="bg-blue-800 text-white w-6 h-6 rounded-md flex items-center justify-center text-xs mr-2">1</span>
-                        讚美詩 370 首：主幫助我們
-                    </h3>
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-5 gap-4">
+                        <div class="flex items-center">
+                            <span class="bg-blue-800 text-white w-7 h-7 rounded-lg flex items-center justify-center font-bold text-sm mr-3">1</span>
+                            <div>
+                                <h3 class="font-bold text-blue-950 text-lg md:text-xl">讚美詩 370 首：主幫助我們</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">經文依據：羅馬書八章 31 節</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 詩譜按鈕 -->
+                        <button onclick="openSheetMusic(370)" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all shadow-md flex items-center gap-2 active:scale-95">
+                            <i class="fas fa-file-invoice mr-1 text-base"></i>檢視 & 下載詩譜
+                        </button>
+                    </div>
+
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                        <a href="https://youtu.be/NHlQP3GaK1k?si=RAbs_lHtX7iaKVeZ" target="_blank" class="btn-part bg-rose-500">
-                            <span class="font-bold text-sm">女高音 Soprano</span>
+                        <a href="https://youtu.be/NHlQP3GaK1k?si=RAbs_lHtX7iaKVeZ" target="_blank" class="btn-part bg-gradient-to-br from-rose-500 to-pink-600">
+                            <span class="text-xs uppercase opacity-75 tracking-wider font-semibold mb-1">Soprano</span>
+                            <span class="font-bold text-base flex items-center gap-1">女高音 <i class="fas fa-external-link-alt text-xs"></i></span>
                         </a>
-                        <a href="https://youtu.be/JMyaAtRuIqE?si=ByMf0G7BOEQx10zs" target="_blank" class="btn-part bg-amber-500">
-                            <span class="font-bold text-sm">女低音 Alto</span>
+                        <a href="https://youtu.be/JMyaAtRuIqE?si=ByMf0G7BOEQx10zs" target="_blank" class="btn-part bg-gradient-to-br from-amber-500 to-orange-600">
+                            <span class="text-xs uppercase opacity-75 tracking-wider font-semibold mb-1">Alto</span>
+                            <span class="font-bold text-base flex items-center gap-1">女低音 <i class="fas fa-external-link-alt text-xs"></i></span>
                         </a>
-                        <a href="https://youtu.be/Qei3S0IJNqs?si=rTL_sFrnSKuIimTx" target="_blank" class="btn-part bg-sky-500">
-                            <span class="font-bold text-sm">男高音 Tenor</span>
+                        <a href="https://youtu.be/Qei3S0IJNqs?si=rTL_sFrnSKuIimTx" target="_blank" class="btn-part bg-gradient-to-br from-sky-500 to-blue-600">
+                            <span class="text-xs uppercase opacity-75 tracking-wider font-semibold mb-1">Tenor</span>
+                            <span class="font-bold text-base flex items-center gap-1">男高音 <i class="fas fa-external-link-alt text-xs"></i></span>
                         </a>
-                        <a href="https://youtu.be/jOa7HGTtoLI?si=iX4XaVCLNfO2p50Yw" target="_blank" class="btn-part bg-slate-700">
-                            <span class="font-bold text-sm">男低音 Bass</span>
+                        <a href="https://youtu.be/jOa7HGTtoLI?si=iX4XaVCLNfO2p50Yw" target="_blank" class="btn-part bg-gradient-to-br from-slate-600 to-slate-800">
+                            <span class="text-xs uppercase opacity-75 tracking-wider font-semibold mb-1">Bass</span>
+                            <span class="font-bold text-base flex items-center gap-1">男低音 <i class="fas fa-external-link-alt text-xs"></i></span>
                         </a>
                     </div>
                 </div>
 
                 <!-- 第二首 -->
-                <div>
-                    <h3 class="font-bold text-purple-800 mb-4 flex items-center">
-                        <span class="bg-purple-800 text-white w-6 h-6 rounded-md flex items-center justify-center text-xs mr-2">2</span>
-                        讚美詩 130 首：你為什忙
-                    </h3>
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-5 gap-4">
+                        <div class="flex items-center">
+                            <span class="bg-purple-800 text-white w-7 h-7 rounded-lg flex items-center justify-center font-bold text-sm mr-3">2</span>
+                            <div>
+                                <h3 class="font-bold text-purple-950 text-lg md:text-xl">讚美詩 130 首：你為什忙</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">勸戒世人切勿因世俗繁華而忘卻天國恩召</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 詩譜按鈕 -->
+                        <button onclick="openSheetMusic(130)" class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all shadow-md flex items-center gap-2 active:scale-95">
+                            <i class="fas fa-file-invoice mr-1 text-base"></i>檢視 & 下載詩譜
+                        </button>
+                    </div>
+
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                        <button onclick="alert('影片製作中')" class="btn-part bg-gray-200 text-gray-400"><span class="text-sm font-bold">女高音</span></button>
-                        <button onclick="alert('影片製作中')" class="btn-part bg-gray-200 text-gray-400"><span class="text-sm font-bold">女低音</span></button>
-                        <button onclick="alert('影片製作中')" class="btn-part bg-gray-200 text-gray-400"><span class="text-sm font-bold">男高音</span></button>
-                        <button onclick="alert('影片製作中')" class="btn-part bg-gray-200 text-gray-400"><span class="text-sm font-bold">男低音</span></button>
+                        <button onclick="triggerHymn130Placeholder('女高音')" class="btn-part bg-slate-200 text-slate-400 border border-slate-300 active:scale-100 cursor-not-allowed hover:brightness-100 shadow-none">
+                            <span class="text-xs uppercase opacity-50 font-semibold mb-1">Soprano</span>
+                            <span class="font-bold text-base text-slate-500">女高音 (建置中)</span>
+                        </button>
+                        <button onclick="triggerHymn130Placeholder('女低音')" class="btn-part bg-slate-200 text-slate-400 border border-slate-300 active:scale-100 cursor-not-allowed hover:brightness-100 shadow-none">
+                            <span class="text-xs uppercase opacity-50 font-semibold mb-1">Alto</span>
+                            <span class="font-bold text-base text-slate-500">女低音 (建置中)</span>
+                        </button>
+                        <button onclick="triggerHymn130Placeholder('男高音')" class="btn-part bg-slate-200 text-slate-400 border border-slate-300 active:scale-100 cursor-not-allowed hover:brightness-100 shadow-none">
+                            <span class="text-xs uppercase opacity-50 font-semibold mb-1">Tenor</span>
+                            <span class="font-bold text-base text-slate-500">男高音 (建置中)</span>
+                        </button>
+                        <button onclick="triggerHymn130Placeholder('男低音')" class="btn-part bg-slate-200 text-slate-400 border border-slate-300 active:scale-100 cursor-not-allowed hover:brightness-100 shadow-none">
+                            <span class="text-xs uppercase opacity-50 font-semibold mb-1">Bass</span>
+                            <span class="font-bold text-base text-slate-500">男低音 (建置中)</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. 最後練習成果錄影 -->
-        <section class="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl">
-            <h2 class="text-2xl font-bold mb-6 serif text-amber-400 flex items-center">
-                <i class="fas fa-video mr-3"></i>最新練詩成果紀錄
-            </h2>
-            <div class="bg-white/10 rounded-2xl aspect-video flex flex-col items-center justify-center border border-white/20">
-                <i class="fas fa-file-video text-5xl mb-4 opacity-30"></i>
-                <p class="text-sm text-white/50 mb-4">尚未上傳本次練習錄影</p>
-                <button onclick="document.getElementById('video-up').click()" class="bg-amber-500 hover:bg-amber-600 text-black px-6 py-2 rounded-full font-bold transition-all">
-                    上傳練詩成果影音
-                </button>
-                <input type="file" id="video-up" class="hidden" accept="video/*,audio/*">
+
+        <!-- 3. 最後練習成果錄音/影音 -->
+        <section class="bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
+                    <h2 class="text-2xl font-bold serif text-amber-400 flex items-center">
+                        <i class="fas fa-video mr-3"></i>最新練詩成果紀錄
+                    </h2>
+                    <span class="text-[10px] uppercase tracking-widest text-slate-500">Latest Practice Record</span>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div class="lg:col-span-2">
+                        <div class="bg-black/40 rounded-2xl aspect-video flex flex-col items-center justify-center border border-white/10 p-6 text-center relative overflow-hidden group">
+                            <!-- 模擬影片封面 -->
+                            <div class="absolute inset-0 bg-cover bg-center opacity-25 filter blur-xs" style="background-image: url('https://placehold.co/800x450/1e293b/ffffff?text=Qianshan+Choir');"></div>
+                            
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-microphone-lines"></i>
+                                </div>
+                                <p class="text-base font-bold text-white/90 mb-1" id="record-title">尚無上傳本次練習錄影/錄音</p>
+                                <p class="text-xs text-white/50 mb-6">歡迎上傳合唱成果檔，供全體班員、指揮及司琴參考調整</p>
+                                
+                                <button onclick="document.getElementById('video-up').click()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-6 py-2.5 rounded-full font-bold transition-all shadow-lg active:scale-95 flex items-center gap-2">
+                                    <i class="fas fa-file-upload"></i> 上傳練詩成果影音
+                                </button>
+                                <input type="file" id="video-up" class="hidden" accept="video/*,audio/*" onchange="handleFileSelected(this)">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col justify-center space-y-4">
+                        <div class="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                            <h4 class="font-bold text-amber-300 text-sm mb-2 flex items-center">
+                                <i class="fas fa-info-circle mr-2"></i>指揮與司琴的話
+                            </h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                上傳的音檔和錄影將會特別用來檢視各聲部的「平衡度」、「強弱對比（p/f）」與「字音和諧度」，幫助我們在獻詩時呈現出最具凝聚力、最能感動人心的敬拜。
+                            </p>
+                        </div>
+                        <p class="text-[11px] text-amber-400/60 text-center italic leading-relaxed">
+                            * 願我們用各樣的智慧，把基督的道理豐豐富富的存在心裡，口唱心和的讚美神！
+                        </p>
+                    </div>
+                </div>
             </div>
-            <p class="text-xs text-amber-400/60 mt-4 text-center italic">
-                * 錄音/影音將供指揮、司琴與班員參考，用以調整和諧度與強弱表現。
-            </p>
         </section>
 
     </main>
 
-    <footer class="mt-12 mb-8 text-center px-6">
-        <p class="text-gray-400 text-xs serif">願神悅納我們所獻上的頌讚</p>
-        <p class="text-gray-300 text-[10px] uppercase mt-1 tracking-widest">TJC 100th Anniversary Music Concert</p>
+    <footer class="mt-16 mb-8 text-center px-6">
+        <p class="text-slate-400 text-xs serif">願神悅納我們所獻上的頌讚</p>
+        <p class="text-slate-500 text-[10px] uppercase mt-1.5 tracking-widest">True Jesus Church West Taiwan Choir 100th Anniversary</p>
     </footer>
 
+
+    <!-- 詩譜互動彈窗 (Sheet Music & Lyrics Lightbox) -->
+    <div id="music-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 md:p-6 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-white w-full max-w-4xl h-[90vh] md:h-[85vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden scale-95 transition-transform duration-300" id="modal-container">
+            
+            <!-- Modal 頂部 -->
+            <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50 shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-600 text-white w-9 h-9 rounded-xl flex items-center justify-center font-bold" id="modal-hymn-number">370</div>
+                    <div>
+                        <h3 class="font-black text-slate-800 text-lg md:text-xl serif" id="modal-hymn-title">讚美詩 370 首：主幫助我們</h3>
+                        <p class="text-xs text-slate-400" id="modal-hymn-subtitle">五線譜與歌詞在線對照</p>
+                    </div>
+                </div>
+                <button onclick="closeSheetMusic()" class="w-10 h-10 rounded-full hover:bg-slate-200 text-slate-400 hover:text-slate-700 transition-colors flex items-center justify-center text-lg active:scale-95">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- 頁籤導覽 (Tabs) -->
+            <div class="flex border-b border-slate-100 shrink-0 bg-white">
+                <button onclick="switchTab('score')" id="tab-score" class="flex-1 py-4 text-center font-bold text-sm border-b-2 border-blue-600 text-blue-600 transition-colors">
+                    <i class="fas fa-music mr-2"></i>五線詩譜
+                </button>
+                <button onclick="switchTab('numbered')" id="tab-numbered" class="flex-1 py-4 text-center font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 transition-colors">
+                    <i class="fas fa-list-ol mr-2"></i>簡譜對照
+                </button>
+                <button onclick="switchTab('lyrics')" id="tab-lyrics" class="flex-1 py-4 text-center font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 transition-colors">
+                    <i class="fas fa-file-alt mr-2"></i>大字體歌詞
+                </button>
+            </div>
+
+            <!-- Modal 內容滾動區 -->
+            <div class="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-50/50 no-scrollbar">
+                
+                <!-- Tab 1: 五線譜內容 -->
+                <div id="content-score" class="space-y-6">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center overflow-x-auto">
+                        <!-- 模擬簡潔美麗的五線譜 SVG，代表讚美詩 -->
+                        <div class="min-w-[600px] w-full max-w-2xl" id="svg-score-container">
+                            <!-- JS 動態生成 -->
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a id="download-score-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 rounded-xl font-bold text-sm transition-all shadow-md active:scale-95">
+                            <i class="fas fa-file-pdf text-rose-400"></i> 下載官方完整五線譜 PDF
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tab 2: 簡譜內容 -->
+                <div id="content-numbered" class="space-y-6 hidden">
+                    <div class="bg-amber-50/60 p-6 md:p-8 rounded-2xl border border-amber-100 font-mono text-slate-700 max-w-2xl mx-auto space-y-4 shadow-inner" id="numbered-score-container">
+                        <!-- JS 動態生成簡譜排版 -->
+                    </div>
+                    <div class="text-center">
+                        <a id="download-numbered-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 rounded-xl font-bold text-sm transition-all shadow-md active:scale-95">
+                            <i class="fas fa-file-pdf text-amber-400"></i> 下載官方完整簡譜 PDF
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tab 3: 大字歌詞內容 -->
+                <div id="content-lyrics" class="hidden max-w-xl mx-auto">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 text-center space-y-6">
+                        <p class="text-xs font-bold text-indigo-600 tracking-widest uppercase">Lyrics / 歌詞對照</p>
+                        <div id="lyrics-container" class="space-y-6 text-lg md:text-xl text-slate-800 font-medium leading-relaxed tracking-wider serif">
+                            <!-- JS 動態插入歌詞 -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal 底部資訊 -->
+            <div class="p-4 border-t border-slate-100 bg-white flex items-center justify-between text-xs text-slate-400 shrink-0">
+                <span>資料來源：真耶穌教會台灣總會聖樂網</span>
+                <span>練習專用，請勿用於商業用途</span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 吐司提示訊息 (Toast Notification) -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-6 py-3.5 rounded-2xl shadow-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 border border-white/10">
+        <div class="text-amber-400" id="toast-icon">
+            <i class="fas fa-info-circle"></i>
+        </div>
+        <span class="text-sm font-bold" id="toast-msg">提示訊息</span>
+    </div>
+
+
     <script>
-        // 倒數計時邏輯
+        // 倒數計時邏輯 (D-Day: 2026/11/1)
         function updateCountdown() {
             const targetDate = new Date('November 1, 2026 00:00:00').getTime();
             const now = new Date().getTime();
@@ -204,9 +402,292 @@
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             document.getElementById('days').innerText = days > 0 ? days : 0;
         }
-
-        setInterval(updateCountdown, 1000);
+        setInterval(updateCountdown, 1000 * 60); // 每分鐘更新一次即可
         updateCountdown();
+
+        // 詩譜與歌詞資料庫
+        const hymnDatabase = {
+            370: {
+                number: "370",
+                title: "讚美詩 370 首：主幫助我們",
+                subtitle: "經文源自《羅馬書》八章31節「神若幫助我們，誰能敵擋我們呢」",
+                lyrics: `
+                    <div class="border-b pb-4 mb-4">
+                        <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-full font-bold">第一節</span>
+                        <p class="mt-3 font-bold text-slate-900">靠主常喜樂，主愛滿溢我心，</p>
+                        <p class="font-bold text-slate-900">賜我們自由，免罪債；</p>
+                        <p class="font-bold text-slate-900">寶血作贖價，使我們不懼怕，</p>
+                        <p class="font-bold text-slate-900">因主與我們常同在。</p>
+                    </div>
+                    <div>
+                        <span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-full font-bold">副歌</span>
+                        <p class="mt-3 text-xl md:text-2xl font-black text-amber-700">主幫助我們，主幫助我們，</p>
+                        <p class="text-xl md:text-2xl font-black text-amber-700">主幫助我們，誰能敵擋我們？</p>
+                        <p class="text-xl md:text-2xl font-black text-amber-700">誰？誰？誰？</p>
+                        <p class="text-xl md:text-2xl font-black text-amber-700">主幫助，誰能敵擋我們？</p>
+                    </div>
+                `,
+                numbered: `
+                    <div class="text-center font-bold text-lg border-b pb-2 mb-4">【簡譜參考段落 - 節奏 4/4】</div>
+                    <div class="space-y-3 leading-loose text-base md:text-lg">
+                        <p class="text-amber-800">1. (首段主旋律)</p>
+                        <p class="font-bold">5  |  3 . 4  5  5  |  i .  i  7  5  |  6 . 7  i  6  |  5 - -</p>
+                        <p class="text-xs text-slate-400">（ 靠   主   常  喜 樂    主  愛  滿 溢 我 心  賜  我  們  自 由  免 罪 債 ）</p>
+                        
+                        <p class="text-amber-800 mt-4">2. (副歌高潮段落)</p>
+                        <p class="font-bold">5  |  i  i  i  i  |  5 . 5  5  |  6  6  6  6  |  3 . 3  3</p>
+                        <p class="text-xs text-slate-400">（ 主  幫 助 我 們  主 幫 助 我 們  主 幫 助 我 們  誰 能 敵 擋 ）</p>
+                        
+                        <p class="font-bold">3  |  4  4  4  4  |  5 . 5  5  |  6  7  i  7  |  i - -</p>
+                        <p class="text-xs text-slate-400">（ 誰  誰  誰  主  幫 助  誰  能  敵  擋  我  們 ）</p>
+                    </div>
+                `,
+                pdfUrl: "https://sacredmusic.tjc.org.tw/hymn/370",
+                svgScore: `
+                    <svg viewBox="0 0 600 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 譜線背景 -->
+                        <rect width="100%" height="100%" fill="#ffffff"/>
+                        <!-- 五線譜第一組 -->
+                        <line x1="20" y1="50" x2="580" y2="50" stroke="#475569" stroke-width="1.5"/>
+                        <line x1="20" y1="65" x2="580" y2="65" stroke="#475569" stroke-width="1.5"/>
+                        <line x1="20" y1="80" x2="580" y2="80" stroke="#475569" stroke-width="1.5"/>
+                        <line x1="20" y1="95" x2="580" y2="95" stroke="#475569" stroke-width="1.5"/>
+                        <line x1="20" y1="110" x2="580" y2="110" stroke="#475569" stroke-width="1.5"/>
+                        
+                        <!-- 譜號高音 -->
+                        <text x="30" y="95" font-family="serif" font-size="45" fill="#1e293b" font-weight="bold">𝄞</text>
+                        <text x="70" y="85" font-family="sans-serif" font-size="16" fill="#1e293b" font-weight="bold">𝄴</text>
+                        
+                        <!-- 小節線 -->
+                        <line x1="280" y1="50" x2="280" y2="110" stroke="#1e293b" stroke-width="2"/>
+                        <line x1="570" y1="50" x2="570" y2="110" stroke="#1e293b" stroke-width="2"/>
+                        
+                        <!-- 音符繪製 -->
+                        <!-- 5 (Sol) -->
+                        <circle cx="110" cy="117" r="6" fill="#1e293b"/> <line x1="116" y1="117" x2="116" y2="75" stroke="#1e293b" stroke-width="2"/>
+                        <text x="100" y="145" font-size="12" fill="#475569" font-weight="bold">靠</text>
+                        
+                        <!-- 3 (Mi) -->
+                        <circle cx="160" cy="95" r="6" fill="#1e293b"/> <line x1="166" y1="95" x2="166" y2="55" stroke="#1e293b" stroke-width="2"/>
+                        <text x="150" y="145" font-size="12" fill="#475569" font-weight="bold">主</text>
+                        
+                        <!-- 4 (Fa) -->
+                        <circle cx="210" cy="87" r="6" fill="#1e293b"/> <line x1="216" y1="87" x2="216" y2="47" stroke="#1e293b" stroke-width="2"/>
+                        <text x="200" y="145" font-size="12" fill="#475569" font-weight="bold">常</text>
+                        
+                        <!-- 5 (Sol) -->
+                        <circle cx="250" cy="80" r="6" fill="#1e293b"/> <line x1="256" y1="80" x2="256" y2="40" stroke="#1e293b" stroke-width="2"/>
+                        <text x="240" y="145" font-size="12" fill="#475569" font-weight="bold">喜</text>
+                        
+                        <!-- 5 (Sol) -->
+                        <circle cx="310" cy="80" r="6" fill="#1e293b"/> <line x1="316" y1="80" x2="316" y2="40" stroke="#1e293b" stroke-width="2"/>
+                        <text x="300" y="145" font-size="12" fill="#475569" font-weight="bold">樂</text>
+                        
+                        <!-- i (Do) -->
+                        <circle cx="370" cy="65" r="6" fill="#1e293b"/> <line x1="376" y1="65" x2="376" y2="25" stroke="#1e293b" stroke-width="2"/>
+                        <text x="360" y="145" font-size="12" fill="#475569" font-weight="bold">主</text>
+                        
+                        <!-- i (Do) -->
+                        <circle cx="430" cy="65" r="6" fill="#1e293b"/> <line x1="436" y1="65" x2="436" y2="25" stroke="#1e293b" stroke-width="2"/>
+                        <text x="420" y="145" font-size="12" fill="#475569" font-weight="bold">愛</text>
+                        
+                        <!-- 7 (Ti) -->
+                        <circle cx="490" cy="72" r="6" fill="#1e293b"/> <line x1="496" y1="72" x2="496" y2="32" stroke="#1e293b" stroke-width="2"/>
+                        <text x="480" y="145" font-size="12" fill="#475569" font-weight="bold">滿</text>
+                        
+                        <!-- 5 (Sol) -->
+                        <circle cx="540" cy="80" r="6" fill="#1e293b"/> <line x1="546" y1="80" x2="546" y2="40" stroke="#1e293b" stroke-width="2"/>
+                        <text x="530" y="145" font-size="12" fill="#475569" font-weight="bold">溢</text>
+                        
+                        <text x="20" y="210" font-size="13" fill="#475569" font-weight="bold" font-family="serif">【主幫助我們 - 第一小節旋律意境展示】</text>
+                        <text x="410" y="210" font-size="11" fill="#94a3b8" font-family="sans-serif">（完整譜檔請點選下方PDF）</text>
+                    </svg>
+                `
+            },
+            130: {
+                number: "130",
+                title: "讚美詩 130 首：你為什忙",
+                subtitle: "喚醒世人思考，在忙碌世俗生活中是否擁有靈魂歸宿的永生盼望",
+                lyrics: `
+                    <div class="border-b pb-4 mb-4">
+                        <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-full font-bold">第一節</span>
+                        <p class="mt-3 font-bold text-slate-900">親愛的朋友！你為什麼忙？</p>
+                        <p class="font-bold text-slate-900">親愛的朋友！你為什麼忙？</p>
+                        <p class="font-bold text-slate-900">你有沒有盼望？有沒有盼望？</p>
+                        <p class="font-bold text-slate-900 text-purple-700">假若今日離世，能否上天堂？</p>
+                    </div>
+                    <div class="border-b pb-4 mb-4">
+                        <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-full font-bold">第二節</span>
+                        <p class="mt-3 font-bold text-slate-900">我已信耶穌，我已有盼望，</p>
+                        <p class="font-bold text-slate-900">我已歸主裡，我為耶穌忙；</p>
+                        <p class="font-bold text-slate-900">靠著主的大恩，我有大盼望，</p>
+                        <p class="font-bold text-slate-900 text-purple-700">假若今日離世，一定上天堂。</p>
+                    </div>
+                    <div>
+                        <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-full font-bold">第三節</span>
+                        <p class="mt-3 font-bold text-slate-900">我已在主裡，我已得救恩，</p>
+                        <p class="font-bold text-slate-900">一路跟從主，必能進天門。</p>
+                        <p class="font-bold text-slate-900">在世本為客旅，時日不內長，</p>
+                        <p class="font-bold text-slate-900 text-purple-700">我若一息尚存，必為耶穌忙。</p>
+                    </div>
+                `,
+                numbered: `
+                    <div class="text-center font-bold text-lg border-b pb-2 mb-4">【簡譜參考段落 - 節奏 3/4】</div>
+                    <div class="space-y-3 leading-loose text-base md:text-lg">
+                        <p class="text-purple-800">1. (首段主旋律問句)</p>
+                        <p class="font-bold">3  4  |  5 - 5  |  6  5  3  |  2 - 1  |  2 - -</p>
+                        <p class="text-xs text-slate-400">（ 親 愛  的  朋  友    你 為 什 麼  忙 ）</p>
+                        
+                        <p class="font-bold">3  4  |  5 - 5  |  i  7  6  |  5 - 3  |  5 - -</p>
+                        <p class="text-xs text-slate-400">（ 親 愛  的  朋  友    你 為 什 麼  忙 ）</p>
+                        
+                        <p class="text-purple-800 mt-4">2. (核心提問落腳)</p>
+                        <p class="font-bold">5  i  |  7 - 6  |  5  3  1  |  2 - 3  |  1 - -</p>
+                        <p class="text-xs text-slate-400">（ 假 若  今  日  離 世    能 否 上 天 堂 ）</p>
+                    </div>
+                `,
+                pdfUrl: "https://sacredmusic.tjc.org.tw/hymn/130",
+                svgScore: `
+                    <svg viewBox="0 0 600 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 譜線背景 -->
+                        <rect width="100%" height="100%" fill="#ffffff"/>
+                        <!-- 五線譜第一組 -->
+                        <line x1="20" y1="50" x2="580" y2="50" stroke="#475569" stroke-width="1.5"/>
+                        <line x1="20" y1="65" x2="580" y2="65" stroke="#475569" stroke-width="1.5"/>
+                        <line x1="20" y1="80" x2="580" y2="80" stroke="#475569" stroke-width="1.5"/>
+                        <line x1="20" y1="95" x2="580" y2="95" stroke="#475569" stroke-width="1.5"/>
+                        <line x1="20" y1="110" x2="580" y2="110" stroke="#475569" stroke-width="1.5"/>
+                        
+                        <!-- 譜號高音 -->
+                        <text x="30" y="95" font-family="serif" font-size="45" fill="#1e293b" font-weight="bold">𝄞</text>
+                        <!-- 3/4 拍 -->
+                        <text x="75" y="75" font-family="sans-serif" font-size="20" fill="#1e293b" font-weight="bold">𝟯</text>
+                        <text x="75" y="100" font-family="sans-serif" font-size="20" fill="#1e293b" font-weight="bold">𝟰</text>
+                        
+                        <!-- 小節線 -->
+                        <line x1="240" y1="50" x2="240" y2="110" stroke="#1e293b" stroke-width="2"/>
+                        <line x1="500" y1="50" x2="500" y2="110" stroke="#1e293b" stroke-width="2"/>
+                        
+                        <!-- 音符繪製 3/4 拍： 3  4 | 5 - 5 -->
+                        <!-- 3 (Mi) -->
+                        <circle cx="120" cy="95" r="6" fill="#1e293b"/> <line x1="126" y1="95" x2="126" y2="55" stroke="#1e293b" stroke-width="2"/>
+                        <text x="110" y="145" font-size="12" fill="#475569" font-weight="bold">親</text>
+                        
+                        <!-- 4 (Fa) -->
+                        <circle cx="180" cy="87" r="6" fill="#1e293b"/> <line x1="186" y1="87" x2="186" y2="47" stroke="#1e293b" stroke-width="2"/>
+                        <text x="170" y="145" font-size="12" fill="#475569" font-weight="bold">愛</text>
+                        
+                        <!-- 小節後 5 (Sol) 二分音符與四分音符 -->
+                        <!-- 5 -->
+                        <circle cx="280" cy="80" r="6" fill="#1e293b"/> <line x1="286" y1="80" x2="286" y2="40" stroke="#1e293b" stroke-width="2"/>
+                        <text x="270" y="145" font-size="12" fill="#475569" font-weight="bold">的</text>
+                        
+                        <!-- 5 -->
+                        <circle cx="380" cy="80" r="6" fill="#1e293b"/> <line x1="386" y1="80" x2="386" y2="40" stroke="#1e293b" stroke-width="2"/>
+                        <text x="370" y="145" font-size="12" fill="#475569" font-weight="bold">朋</text>
+                        
+                        <!-- 6 (La) -->
+                        <circle cx="440" cy="72" r="6" fill="#1e293b"/> <line x1="446" y1="72" x2="446" y2="32" stroke="#1e293b" stroke-width="2"/>
+                        <text x="430" y="145" font-size="12" fill="#475569" font-weight="bold">友</text>
+                        
+                        <text x="20" y="210" font-size="13" fill="#475569" font-weight="bold" font-family="serif">【你為什麼忙 - 前奏與第一小節練習旋律】</text>
+                        <text x="410" y="210" font-size="11" fill="#94a3b8" font-family="sans-serif">（完整譜檔請點選下方PDF）</text>
+                    </svg>
+                `
+            }
+        };
+
+
+        // 打開詩譜彈出視窗
+        function openSheetMusic(number) {
+            const data = hymnDatabase[number];
+            if (!data) return;
+
+            // 帶入內容
+            document.getElementById('modal-hymn-number').innerText = data.number;
+            document.getElementById('modal-hymn-title').innerText = data.title;
+            document.getElementById('modal-hymn-subtitle').innerText = data.subtitle;
+            
+            document.getElementById('lyrics-container').innerHTML = data.lyrics;
+            document.getElementById('numbered-score-container').innerHTML = data.numbered;
+            document.getElementById('svg-score-container').innerHTML = data.svgScore;
+            
+            // 帶入 PDF 連結
+            document.getElementById('download-score-link').href = data.pdfUrl;
+            document.getElementById('download-numbered-link').href = data.pdfUrl;
+
+            // 切換成預設的 score 標籤
+            switchTab('score');
+
+            // 顯示彈窗動畫
+            const modal = document.getElementById('music-modal');
+            const container = document.getElementById('modal-container');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-95');
+        }
+
+        // 關閉詩譜彈出視窗
+        function closeSheetMusic() {
+            const modal = document.getElementById('music-modal');
+            const container = document.getElementById('modal-container');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            container.classList.add('scale-95');
+        }
+
+        // 切換頁籤
+        function switchTab(tabType) {
+            // 所有標籤列表
+            const tabs = ['score', 'numbered', 'lyrics'];
+            
+            tabs.forEach(tab => {
+                const btn = document.getElementById(`tab-${tab}`);
+                const content = document.getElementById(`content-${tab}`);
+                
+                if (tab === tabType) {
+                    btn.className = "flex-1 py-4 text-center font-bold text-sm border-b-2 border-blue-600 text-blue-600 transition-colors";
+                    content.classList.remove('hidden');
+                } else {
+                    btn.className = "flex-1 py-4 text-center font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 transition-colors";
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+
+        // 上傳檔案處理 (純模擬前端互動)
+        function handleFileSelected(input) {
+            if (input.files.length > 0) {
+                const fileName = input.files[0].name;
+                const recordTitle = document.getElementById('record-title');
+                
+                recordTitle.innerHTML = `
+                    <span class="flex items-center gap-2 text-emerald-400">
+                        <i class="fas fa-check-circle"></i> 已選取檔案: ${fileName}
+                    </span>
+                `;
+                showToast("🎉 檔案已選擇！正在模擬解析音檔，即將為指揮建立專屬備份。");
+            }
+        }
+
+        // 第二首更新中提示
+        function triggerHymn130Placeholder(part) {
+            showToast(`🎵 讚美詩130首【${part}】練習影片製作中，敬請班員先看譜熟悉歌詞！`);
+        }
+
+        // 顯示Toast訊息
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.innerText = msg;
+            
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 4000);
+        }
     </script>
 </body>
 </html>
