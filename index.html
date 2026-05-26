@@ -121,10 +121,10 @@
                     <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">已完成</span>
                 </div>
 
-                <!-- 待練習 (使用 JS 動態渲染或靜態直觀列出) -->
+                <!-- 待練習 -->
                 <script>
                     const upcomingDates = [
-                        { m: '06', d: '27', label: '預排練習', desc: '雙曲調和度與發聲練習' },
+                        { m: '06', d: '20', label: '預排練習', desc: '雙曲調和度與發聲練習 (原6/27改期)' },
                         { m: '07', d: '18', label: '預排練習', desc: '細部強弱與呼吸配合' },
                         { m: '08', d: '15', label: '預排練習', desc: '背譜演練與聲部和諧' },
                         { m: '09', d: '19', label: '預排練習', desc: '表情記號與指揮默契' },
@@ -244,49 +244,65 @@
         </section>
 
 
-        <!-- 3. 最後練習成果錄音/影音 -->
+        <!-- 3. 最後練習成果錄音/影音 (已改為整合雲端相簿) -->
         <section class="bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden border border-slate-800">
             <div class="relative z-10">
                 <div class="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
                     <h2 class="text-2xl font-bold serif text-amber-400 flex items-center">
-                        <i class="fas fa-video mr-3"></i>最新練詩成果紀錄
+                        <i class="fas fa-images mr-3"></i>最新練詩成果紀錄
                     </h2>
-                    <span class="text-[10px] uppercase tracking-widest text-slate-500">Latest Practice Record</span>
+                    <span class="text-[10px] uppercase tracking-widest text-slate-500">Practice Cloud Album</span>
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
                     <div class="lg:col-span-2">
                         <div class="bg-black/40 rounded-2xl aspect-video flex flex-col items-center justify-center border border-white/10 p-6 text-center relative overflow-hidden group">
                             <!-- 模擬影片封面 -->
-                            <div class="absolute inset-0 bg-cover bg-center opacity-25 filter blur-xs" style="background-image: url('https://placehold.co/800x450/1e293b/ffffff?text=Qianshan+Choir');"></div>
+                            <div class="absolute inset-0 bg-cover bg-center opacity-20 filter blur-[2px]" style="background-image: url('https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=800&auto=format&fit=crop');"></div>
                             
                             <div class="relative z-10 flex flex-col items-center">
                                 <div class="w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-microphone-lines"></i>
+                                    <i class="fas fa-cloud-sun"></i>
                                 </div>
-                                <p class="text-base font-bold text-white/90 mb-1" id="record-title">尚無上傳本次練習錄影/錄音</p>
-                                <p class="text-xs text-white/50 mb-6">歡迎上傳合唱成果檔，供全體班員、指揮及司琴參考調整</p>
+                                <p class="text-lg font-bold text-white mb-2" id="album-status-title">前山牧區專屬雲端相簿</p>
+                                <p class="text-xs text-slate-300 mb-6 max-w-md">本次練習的所有合唱錄音與成果錄影，均已妥善備份至雲端相簿中，歡迎班員、指揮及司琴點擊前往觀看、上傳或下載複習！</p>
                                 
-                                <button onclick="document.getElementById('video-up').click()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-6 py-2.5 rounded-full font-bold transition-all shadow-lg active:scale-95 flex items-center gap-2">
-                                    <i class="fas fa-file-upload"></i> 上傳練詩成果影音
-                                </button>
-                                <input type="file" id="video-up" class="hidden" accept="video/*,audio/*" onchange="handleFileSelected(this)">
+                                <div class="flex flex-wrap justify-center gap-3">
+                                    <!-- 核心雲端連結按鈕 -->
+                                    <a id="cloud-album-link" href="https://photos.google.com" target="_blank" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 px-8 py-3 rounded-full font-black transition-all shadow-lg active:scale-95 flex items-center gap-2 text-sm">
+                                        <i class="fas fa-external-link-alt"></i> 前往【雲端相簿】觀看影音
+                                    </a>
+                                    <!-- 自訂連結按鈕 -->
+                                    <button onclick="toggleConfigLink()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-3 rounded-full font-bold transition-all text-xs">
+                                        <i class="fas fa-cog"></i> 設定相簿連結
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="flex flex-col justify-center space-y-4">
+                        <!-- 自訂連結輸入框 (預設隱藏，點擊按鈕後顯示) -->
+                        <div id="config-link-box" class="bg-white/5 border border-amber-500/30 p-5 rounded-2xl hidden transition-all">
+                            <h4 class="font-bold text-amber-300 text-xs mb-2 flex items-center justify-between">
+                                <span><i class="fas fa-link mr-1"></i> 指揮/管理員設定專區</span>
+                                <button onclick="toggleConfigLink()" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+                            </h4>
+                            <p class="text-[11px] text-slate-400 mb-3">請在下方貼上您們真正的 Google 雲端硬碟、Google 相簿、LINE 影片庫或任何雲端連結：</p>
+                            <input type="text" id="album-url-input" placeholder="https://..." class="w-full bg-slate-950 border border-white/20 rounded-xl px-3 py-2 text-xs text-white mb-2 focus:outline-none focus:border-amber-400">
+                            <button onclick="saveAlbumUrl()" class="w-full bg-amber-500 text-slate-950 font-bold py-1.5 rounded-lg text-xs hover:bg-amber-600 transition-colors">
+                                儲存並更新連結
+                            </button>
+                        </div>
+
                         <div class="bg-white/5 border border-white/10 p-5 rounded-2xl">
                             <h4 class="font-bold text-amber-300 text-sm mb-2 flex items-center">
                                 <i class="fas fa-info-circle mr-2"></i>指揮與司琴的話
                             </h4>
                             <p class="text-xs text-slate-300 leading-relaxed">
-                                上傳的音檔和錄影將會特別用來檢視各聲部的「平衡度」、「強弱對比（p/f）」與「字音和諧度」，幫助我們在獻詩時呈現出最具凝聚力、最能感動人心的敬拜。
+                                請至雲端相簿檢視各聲部的「平衡度」與「字音和諧度」。錄影記錄有助於大家在線上彼此聆聽，互相勸戒，口唱心和地唱出最美的讚美！
                             </p>
                         </div>
-                        <p class="text-[11px] text-amber-400/60 text-center italic leading-relaxed">
-                            * 願我們用各樣的智慧，把基督的道理豐豐富富的存在心裡，口唱心和的讚美神！
-                        </p>
                     </div>
                 </div>
             </div>
@@ -337,7 +353,6 @@
                 <!-- Tab 1: 五線譜內容 -->
                 <div id="content-score" class="space-y-6">
                     <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center overflow-x-auto">
-                        <!-- 模擬簡潔美麗的五線譜 SVG，代表讚美詩 -->
                         <div class="min-w-[600px] w-full max-w-2xl" id="svg-score-container">
                             <!-- JS 動態生成 -->
                         </div>
@@ -402,7 +417,7 @@
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             document.getElementById('days').innerText = days > 0 ? days : 0;
         }
-        setInterval(updateCountdown, 1000 * 60); // 每分鐘更新一次即可
+        setInterval(updateCountdown, 1000 * 60);
         updateCountdown();
 
         // 詩譜與歌詞資料庫
@@ -436,69 +451,43 @@
                         
                         <p class="text-amber-800 mt-4">2. (副歌高潮段落)</p>
                         <p class="font-bold">5  |  i  i  i  i  |  5 . 5  5  |  6  6  6  6  |  3 . 3  3</p>
-                        <p class="text-xs text-slate-400">（ 主  幫 助 我 們  主 幫 助 我 們  主 幫 助 我 們  誰 能 敵 擋 ）</p>
+                        <p class="text-xs text-slate-400">（ 主  幫 助 我 門  主 幫 助 我 門  主 幫 助 我 門  誰 能 敵 擋 ）</p>
                         
                         <p class="font-bold">3  |  4  4  4  4  |  5 . 5  5  |  6  7  i  7  |  i - -</p>
-                        <p class="text-xs text-slate-400">（ 誰  誰  誰  主  幫 助  誰  能  敵  擋  我  們 ）</p>
+                        <p class="text-xs text-slate-400">（ 誰  誰  誰  主  幫 助  誰  能  敵  擋  我  門 ）</p>
                     </div>
                 `,
                 pdfUrl: "https://sacredmusic.tjc.org.tw/hymn/370",
                 svgScore: `
                     <svg viewBox="0 0 600 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- 譜線背景 -->
                         <rect width="100%" height="100%" fill="#ffffff"/>
-                        <!-- 五線譜第一組 -->
                         <line x1="20" y1="50" x2="580" y2="50" stroke="#475569" stroke-width="1.5"/>
                         <line x1="20" y1="65" x2="580" y2="65" stroke="#475569" stroke-width="1.5"/>
                         <line x1="20" y1="80" x2="580" y2="80" stroke="#475569" stroke-width="1.5"/>
                         <line x1="20" y1="95" x2="580" y2="95" stroke="#475569" stroke-width="1.5"/>
                         <line x1="20" y1="110" x2="580" y2="110" stroke="#475569" stroke-width="1.5"/>
-                        
-                        <!-- 譜號高音 -->
                         <text x="30" y="95" font-family="serif" font-size="45" fill="#1e293b" font-weight="bold">𝄞</text>
                         <text x="70" y="85" font-family="sans-serif" font-size="16" fill="#1e293b" font-weight="bold">𝄴</text>
-                        
-                        <!-- 小節線 -->
                         <line x1="280" y1="50" x2="280" y2="110" stroke="#1e293b" stroke-width="2"/>
                         <line x1="570" y1="50" x2="570" y2="110" stroke="#1e293b" stroke-width="2"/>
-                        
-                        <!-- 音符繪製 -->
-                        <!-- 5 (Sol) -->
                         <circle cx="110" cy="117" r="6" fill="#1e293b"/> <line x1="116" y1="117" x2="116" y2="75" stroke="#1e293b" stroke-width="2"/>
                         <text x="100" y="145" font-size="12" fill="#475569" font-weight="bold">靠</text>
-                        
-                        <!-- 3 (Mi) -->
                         <circle cx="160" cy="95" r="6" fill="#1e293b"/> <line x1="166" y1="95" x2="166" y2="55" stroke="#1e293b" stroke-width="2"/>
                         <text x="150" y="145" font-size="12" fill="#475569" font-weight="bold">主</text>
-                        
-                        <!-- 4 (Fa) -->
                         <circle cx="210" cy="87" r="6" fill="#1e293b"/> <line x1="216" y1="87" x2="216" y2="47" stroke="#1e293b" stroke-width="2"/>
                         <text x="200" y="145" font-size="12" fill="#475569" font-weight="bold">常</text>
-                        
-                        <!-- 5 (Sol) -->
                         <circle cx="250" cy="80" r="6" fill="#1e293b"/> <line x1="256" y1="80" x2="256" y2="40" stroke="#1e293b" stroke-width="2"/>
                         <text x="240" y="145" font-size="12" fill="#475569" font-weight="bold">喜</text>
-                        
-                        <!-- 5 (Sol) -->
                         <circle cx="310" cy="80" r="6" fill="#1e293b"/> <line x1="316" y1="80" x2="316" y2="40" stroke="#1e293b" stroke-width="2"/>
                         <text x="300" y="145" font-size="12" fill="#475569" font-weight="bold">樂</text>
-                        
-                        <!-- i (Do) -->
                         <circle cx="370" cy="65" r="6" fill="#1e293b"/> <line x1="376" y1="65" x2="376" y2="25" stroke="#1e293b" stroke-width="2"/>
                         <text x="360" y="145" font-size="12" fill="#475569" font-weight="bold">主</text>
-                        
-                        <!-- i (Do) -->
                         <circle cx="430" cy="65" r="6" fill="#1e293b"/> <line x1="436" y1="65" x2="436" y2="25" stroke="#1e293b" stroke-width="2"/>
                         <text x="420" y="145" font-size="12" fill="#475569" font-weight="bold">愛</text>
-                        
-                        <!-- 7 (Ti) -->
                         <circle cx="490" cy="72" r="6" fill="#1e293b"/> <line x1="496" y1="72" x2="496" y2="32" stroke="#1e293b" stroke-width="2"/>
                         <text x="480" y="145" font-size="12" fill="#475569" font-weight="bold">滿</text>
-                        
-                        <!-- 5 (Sol) -->
                         <circle cx="540" cy="80" r="6" fill="#1e293b"/> <line x1="546" y1="80" x2="546" y2="40" stroke="#1e293b" stroke-width="2"/>
                         <text x="530" y="145" font-size="12" fill="#475569" font-weight="bold">溢</text>
-                        
                         <text x="20" y="210" font-size="13" fill="#475569" font-weight="bold" font-family="serif">【主幫助我們 - 第一小節旋律意境展示】</text>
                         <text x="410" y="210" font-size="11" fill="#94a3b8" font-family="sans-serif">（完整譜檔請點選下方PDF）</text>
                     </svg>
@@ -549,47 +538,27 @@
                 pdfUrl: "https://sacredmusic.tjc.org.tw/hymn/130",
                 svgScore: `
                     <svg viewBox="0 0 600 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- 譜線背景 -->
                         <rect width="100%" height="100%" fill="#ffffff"/>
-                        <!-- 五線譜第一組 -->
                         <line x1="20" y1="50" x2="580" y2="50" stroke="#475569" stroke-width="1.5"/>
                         <line x1="20" y1="65" x2="580" y2="65" stroke="#475569" stroke-width="1.5"/>
                         <line x1="20" y1="80" x2="580" y2="80" stroke="#475569" stroke-width="1.5"/>
                         <line x1="20" y1="95" x2="580" y2="95" stroke="#475569" stroke-width="1.5"/>
                         <line x1="20" y1="110" x2="580" y2="110" stroke="#475569" stroke-width="1.5"/>
-                        
-                        <!-- 譜號高音 -->
                         <text x="30" y="95" font-family="serif" font-size="45" fill="#1e293b" font-weight="bold">𝄞</text>
-                        <!-- 3/4 拍 -->
                         <text x="75" y="75" font-family="sans-serif" font-size="20" fill="#1e293b" font-weight="bold">𝟯</text>
                         <text x="75" y="100" font-family="sans-serif" font-size="20" fill="#1e293b" font-weight="bold">𝟰</text>
-                        
-                        <!-- 小節線 -->
                         <line x1="240" y1="50" x2="240" y2="110" stroke="#1e293b" stroke-width="2"/>
                         <line x1="500" y1="50" x2="500" y2="110" stroke="#1e293b" stroke-width="2"/>
-                        
-                        <!-- 音符繪製 3/4 拍： 3  4 | 5 - 5 -->
-                        <!-- 3 (Mi) -->
                         <circle cx="120" cy="95" r="6" fill="#1e293b"/> <line x1="126" y1="95" x2="126" y2="55" stroke="#1e293b" stroke-width="2"/>
                         <text x="110" y="145" font-size="12" fill="#475569" font-weight="bold">親</text>
-                        
-                        <!-- 4 (Fa) -->
                         <circle cx="180" cy="87" r="6" fill="#1e293b"/> <line x1="186" y1="87" x2="186" y2="47" stroke="#1e293b" stroke-width="2"/>
                         <text x="170" y="145" font-size="12" fill="#475569" font-weight="bold">愛</text>
-                        
-                        <!-- 小節後 5 (Sol) 二分音符與四分音符 -->
-                        <!-- 5 -->
                         <circle cx="280" cy="80" r="6" fill="#1e293b"/> <line x1="286" y1="80" x2="286" y2="40" stroke="#1e293b" stroke-width="2"/>
                         <text x="270" y="145" font-size="12" fill="#475569" font-weight="bold">的</text>
-                        
-                        <!-- 5 -->
                         <circle cx="380" cy="80" r="6" fill="#1e293b"/> <line x1="386" y1="80" x2="386" y2="40" stroke="#1e293b" stroke-width="2"/>
                         <text x="370" y="145" font-size="12" fill="#475569" font-weight="bold">朋</text>
-                        
-                        <!-- 6 (La) -->
                         <circle cx="440" cy="72" r="6" fill="#1e293b"/> <line x1="446" y1="72" x2="446" y2="32" stroke="#1e293b" stroke-width="2"/>
                         <text x="430" y="145" font-size="12" fill="#475569" font-weight="bold">友</text>
-                        
                         <text x="20" y="210" font-size="13" fill="#475569" font-weight="bold" font-family="serif">【你為什麼忙 - 前奏與第一小節練習旋律】</text>
                         <text x="410" y="210" font-size="11" fill="#94a3b8" font-family="sans-serif">（完整譜檔請點選下方PDF）</text>
                     </svg>
@@ -598,12 +567,44 @@
         };
 
 
+        // 初始化自訂雲端連結
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUrl = localStorage.getItem('choir_album_url');
+            if (savedUrl) {
+                document.getElementById('cloud-album-link').href = savedUrl;
+                document.getElementById('album-url-input').value = savedUrl;
+            } else {
+                // 預設示範相簿連結
+                const defaultUrl = "https://photos.google.com"; 
+                document.getElementById('cloud-album-link').href = defaultUrl;
+                document.getElementById('album-url-input').value = defaultUrl;
+            }
+        });
+
+        // 打開/隱藏自訂連結面板
+        function toggleConfigLink() {
+            const box = document.getElementById('config-link-box');
+            box.classList.toggle('hidden');
+        }
+
+        // 儲存雲端相簿網址
+        function saveAlbumUrl() {
+            const inputVal = document.getElementById('album-url-input').value.trim();
+            if (inputVal) {
+                localStorage.setItem('choir_album_url', inputVal);
+                document.getElementById('cloud-album-link').href = inputVal;
+                showToast("💾 雲端相簿網址已儲存並成功更新按鈕連結！");
+                toggleConfigLink();
+            } else {
+                showToast("⚠️ 請輸入有效的網址");
+            }
+        }
+
         // 打開詩譜彈出視窗
         function openSheetMusic(number) {
             const data = hymnDatabase[number];
             if (!data) return;
 
-            // 帶入內容
             document.getElementById('modal-hymn-number').innerText = data.number;
             document.getElementById('modal-hymn-title').innerText = data.title;
             document.getElementById('modal-hymn-subtitle').innerText = data.subtitle;
@@ -612,14 +613,11 @@
             document.getElementById('numbered-score-container').innerHTML = data.numbered;
             document.getElementById('svg-score-container').innerHTML = data.svgScore;
             
-            // 帶入 PDF 連結
             document.getElementById('download-score-link').href = data.pdfUrl;
             document.getElementById('download-numbered-link').href = data.pdfUrl;
 
-            // 切換成預設的 score 標籤
             switchTab('score');
 
-            // 顯示彈窗動畫
             const modal = document.getElementById('music-modal');
             const container = document.getElementById('modal-container');
             modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -636,7 +634,6 @@
 
         // 切換頁籤
         function switchTab(tabType) {
-            // 所有標籤列表
             const tabs = ['score', 'numbered', 'lyrics'];
             
             tabs.forEach(tab => {
@@ -651,22 +648,6 @@
                     content.classList.add('hidden');
                 }
             });
-        }
-
-
-        // 上傳檔案處理 (純模擬前端互動)
-        function handleFileSelected(input) {
-            if (input.files.length > 0) {
-                const fileName = input.files[0].name;
-                const recordTitle = document.getElementById('record-title');
-                
-                recordTitle.innerHTML = `
-                    <span class="flex items-center gap-2 text-emerald-400">
-                        <i class="fas fa-check-circle"></i> 已選取檔案: ${fileName}
-                    </span>
-                `;
-                showToast("🎉 檔案已選擇！正在模擬解析音檔，即將為指揮建立專屬備份。");
-            }
         }
 
         // 第二首更新中提示
