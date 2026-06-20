@@ -1,296 +1,577 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TJC 西區音樂會 - 16大詩班影像收集系統</title>
-    
-    <!-- 載入 Tailwind CSS (極速排版引擎) -->
+    <title>前山牧區聯合詩班 - 傳台百年音樂會</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; margin: 0; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .serif { font-family: 'Noto Serif TC', serif; }
+
+        .btn-part {
+            @apply flex flex-col items-center justify-center p-4 rounded-2xl text-white transition-all duration-200 shadow-md active:scale-95 hover:brightness-110;
+        }
+
+        .schedule-item {
+            @apply flex items-center justify-between p-4 bg-white rounded-xl border-l-4 transition-all;
+        }
+        
+        .completed { @apply border-l-emerald-500 opacity-60; }
+        .upcoming { @apply border-l-blue-500 shadow-sm; }
+        .highlight { @apply border-l-amber-500 ring-2 ring-amber-200; }
+
+        /* 詩班座位按鈕樣式 */
+        .seat-btn {
+            @apply p-2 rounded-xl text-xs font-bold transition-all duration-200 border text-center flex flex-col items-center justify-center h-14 shadow-sm active:scale-90;
+        }
+        .seat-absent-S { @apply bg-rose-50/50 text-rose-700 border-rose-200 hover:bg-rose-100; }
+        .seat-absent-A { @apply bg-amber-50/50 text-amber-700 border-amber-200 hover:bg-amber-100; }
+        .seat-absent-T { @apply bg-sky-50/50 text-sky-700 border-sky-200 hover:bg-sky-100; }
+        .seat-absent-B { @apply bg-slate-50/50 text-slate-700 border-slate-200 hover:bg-slate-100; }
+        
+        .seat-present { @apply bg-emerald-600 text-white border-emerald-700 shadow-md ring-2 ring-emerald-300; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col justify-between">
+<body class="pb-24">
 
-    <!-- 頂部官方導覽列 -->
-    <header class="bg-indigo-950 text-white shadow-lg shrink-0">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center p-0.5 shadow-md">
-                    <img src="百週年.png" alt="100" class="w-full h-full object-contain" onerror="this.outerHTML='<span class=\'text-indigo-950 font-black text-xs\'>100th</span>'" />
+    <!-- 頂部標題與倒數計時 -->
+    <header class="bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white py-14 px-6 text-center shadow-2xl relative overflow-hidden">
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">
+                TJC 傳台百年音樂會
+            </span>
+            <h1 class="text-3xl md:text-5xl font-black mb-3 serif tracking-widest leading-tight">前山牧區聯合詩班</h1>
+            <p class="text-blue-200 text-lg md:text-xl font-light mb-8">西區音樂會獻詩練習專用平台</p>
+            
+            <!-- 倒數計時 -->
+            <div class="inline-flex items-center space-x-6 bg-white/5 backdrop-blur-lg px-8 py-5 rounded-3xl border border-white/10 shadow-inner">
+                <div class="text-center">
+                    <span id="days" class="text-4xl md:text-5xl font-black text-amber-400 tracking-tight">---</span>
+                    <p class="text-[10px] uppercase tracking-widest text-blue-200/60 mt-1">Days remaining</p>
                 </div>
-                <div>
-                    <p class="text-[10px] font-black uppercase text-indigo-300 tracking-[0.2em] leading-none mb-1">TJC Western District Centennial</p>
-                    <h1 class="text-lg font-black leading-tight">西區16獻詩單位 - 影音資料收集與導覽系統</h1>
+                <div class="border-l border-white/10 h-12"></div>
+                <div class="text-left">
+                    <p class="text-sm font-bold text-white/90">2026 年 11 月 01 日</p>
+                    <p class="text-xs text-amber-300 font-semibold mt-0.5">真耶穌教會西區音樂會獻詩</p>
                 </div>
-            </div>
-            <div class="flex items-center gap-3">
-                <span class="text-[10px] bg-amber-500/20 text-amber-300 px-3 py-1.5 rounded-full border border-amber-500/30 font-bold">公關宣傳組 專屬分流系統</span>
             </div>
         </div>
     </header>
 
-    <!-- 主區塊 -->
-    <main class="max-w-7xl mx-auto w-full px-6 py-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- 左側：16大詩班聯絡清單 (5列寬) -->
-        <section class="lg:col-span-5 bg-white rounded-[2rem] shadow-xl border border-slate-100 flex flex-col h-[650px] overflow-hidden">
-            <div class="p-6 bg-slate-900 text-white shrink-0">
-                <h3 class="font-black text-base flex items-center gap-2">
-                    <!-- Users Icon -->
-                    <svg class="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                    西區參獻詩班名冊 (共16大單位)
-                </h3>
-                <p class="text-[10px] text-slate-400 mt-1 font-bold">點選詩班查看幹部名單與提交影音資料</p>
-                
-                <!-- 簡易搜尋欄 -->
-                <div class="mt-4 relative">
-                    <input id="search-input" oninput="filterChoirs()" type="text" placeholder="搜尋小區、詩班或人員..." class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-                </div>
-            </div>
+    <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
 
-            <!-- 16大詩班滾動清單 -->
-            <div id="choir-list" class="flex-grow overflow-y-auto p-4 space-y-2 custom-scrollbar bg-slate-50/50">
-                <!-- 由 JavaScript 動態生成 -->
-            </div>
-        </section>
-
-        <!-- 右側：詩班詳細資訊與提交系統 (7列寬) -->
-        <section class="lg:col-span-7 flex flex-col gap-6">
-            
-            <!-- 進度追蹤器看板 -->
-            <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 grid grid-cols-3 gap-4 shrink-0">
-                <div class="text-center p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                    <div class="text-2xl font-black text-indigo-600">16</div>
-                    <div class="text-[10px] text-slate-400 font-bold uppercase mt-1">參獻總單位</div>
-                </div>
-                <div class="text-center p-3 bg-emerald-50 rounded-2xl border border-emerald-100">
-                    <div id="count-submitted" class="text-2xl font-black text-emerald-600">0</div>
-                    <div class="text-[10px] text-emerald-500 font-bold uppercase mt-1">已提交影像</div>
-                </div>
-                <div class="text-center p-3 bg-amber-50 rounded-2xl border border-amber-100">
-                    <div id="count-pending" class="text-2xl font-black text-amber-600">16</div>
-                    <div class="text-[10px] text-amber-500 font-bold uppercase mt-1">待提交單位</div>
-                </div>
-            </div>
-
-            <!-- 詳細資訊面板 -->
-            <div id="detail-panel" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex-grow flex flex-col justify-center items-center text-center">
-                <!-- 預設提示畫面 -->
-                <div class="max-w-sm">
-                    <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                        <!-- Music Icon -->
-                        <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>
+        <!-- ================= 全新：現場平板點名系統 ================= -->
+        <section class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 border-b pb-4 gap-4">
+                <div class="flex items-center">
+                    <div class="bg-emerald-100 text-emerald-700 w-10 h-10 rounded-xl flex items-center justify-center mr-3">
+                        <i class="fas fa-tablet-alt text-lg"></i>
                     </div>
-                    <h4 class="text-lg font-black text-slate-800">請選取獻詩單位</h4>
-                    <p class="text-xs text-slate-400 mt-3 leading-relaxed font-medium">
-                        選擇左側名冊中的詩班，即可檢視幹部編制，並取得專屬的練詩影音上傳入口。
-                    </p>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 serif">詩班出席現場點名（平板專用）</h2>
+                        <p class="text-xs text-gray-400 mt-0.5">請班員依實際座位點擊自己的名字以點亮出席</p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="exportAttendance()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+                        <i class="fas fa-file-download"></i> 匯出後台紀錄
+                    </button>
+                    <button onclick="resetAttendance()" class="bg-rose-50 text-rose-600 hover:bg-rose-100 px-3 py-2 rounded-xl text-xs font-bold transition-all">
+                        重設
+                    </button>
                 </div>
             </div>
-        </section>
 
-    </main>
+            <!-- 音樂會聖台與聖職人員席 -->
+            <div class="max-w-3xl mx-auto mb-8 text-center">
+                <div class="bg-slate-150 border-2 border-slate-200 rounded-xl py-2 px-6 mb-4 text-xs font-bold text-slate-500 tracking-widest uppercase">
+                    ─── 講台 / 音樂會舞台正前方 ───
+                </div>
+                
+                <!-- 聖職/指揮/司琴席 -->
+                <div class="grid grid-cols-4 gap-3 max-w-xl mx-auto text-xs font-bold mb-6">
+                    <div class="bg-slate-800 text-slate-200 p-2 rounded-xl flex flex-col justify-center">
+                        <span class="text-[10px] opacity-60">班負責</span>
+                        <span>林茜草</span>
+                    </div>
+                    <div class="bg-indigo-900 text-amber-300 p-2 rounded-xl flex flex-col justify-center ring-2 ring-indigo-200">
+                        <span class="text-[10px] opacity-60">指揮</span>
+                        <span>王鴻志</span>
+                    </div>
+                    <div class="bg-indigo-900 text-amber-300 p-2 rounded-xl flex flex-col justify-center ring-2 ring-indigo-200">
+                        <span class="text-[10px] opacity-60">司琴</span>
+                        <span>孔思恩</span>
+                    </div>
+                    <div class="bg-indigo-900 text-amber-300 p-2 rounded-xl flex flex-col justify-center ring-2 ring-indigo-200">
+                        <span class="text-[10px] opacity-60">司琴</span>
+                        <span>陳箴</span>
+                    </div>
+                </div>
+            </div>
 
-    <!-- 頁尾宣告 -->
-    <footer class="bg-slate-900 text-slate-500 text-[10px] text-center py-4 border-t border-slate-800 shrink-0">
-        TJC Western District Centennial Music Concert PR Group © 2026. All Rights Reserved.
-    </footer>
-
-    <!-- JavaScript 核心控制 (0秒延遲啟動) -->
-    <script>
-        // 1. 強制隱藏啟動畫面
-        const loader = document.getElementById('launch-loader');
-        if (loader) {
-            loader.style.opacity = '0';
-            setTimeout(() => loader.style.display = 'none', 300);
-        }
-
-        // 2. 16大詩班完整真實數據 (源自 Excel)
-        const choirs = [
-            { id: 1, zone: "復興小區", note: "前山牧區", name: "復興小區前山聯合詩班", leader: "林茜葦", email: "saum0523@gmail.com", conductor: "王鴻志", pianist: "陳 箴 / 孔思恩", status: "pending" },
-            { id: 2, zone: "復興小區", note: "中山牧區", name: "復興小區中山聯合兒童詩班", leader: "胡燕琳", email: "", conductor: "胡燕琳", pianist: "陳齊揚", status: "pending" },
-            { id: 3, zone: "復興小區", note: "後山牧區", name: "復興小區後山職務人員聯合詩班", leader: "未提供", email: "", conductor: "田恩惠", pianist: "林月霞", status: "pending" },
-            { id: 4, zone: "竹苗小區", note: "尖石前山", name: "尖石前山聯合詩班", leader: "未提供", email: "", conductor: "徐慈敏", pianist: "徐 臻", status: "pending" },
-            { id: 5, zone: "竹苗小區", note: "尖石後山", name: "尖石後山聯合詩班", leader: "未提供", email: "", conductor: "未提供", pianist: "未提供", status: "pending" },
-            { id: 6, zone: "竹苗小區", note: "五峰牧區", name: "五峰線綜合詩班", leader: "蘇志成", email: "", conductor: "黃欣茹", pianist: "張立揚", status: "pending" },
-            { id: 7, zone: "竹苗小區", note: "中港溪", name: "中港溪聯合詩班", leader: "未提供", email: "", conductor: "未提供", pianist: "未提供", status: "pending" },
-            { id: 8, zone: "中苗小區", note: "東達牧區", name: "東達牧區聯合詩班", leader: "陳寧", email: "", conductor: "胡致念", pianist: "張紫芸", status: "pending" },
-            { id: 9, zone: "中苗小區", note: "泰安牧區", name: "泰安牧區聯合詩班", leader: "未提供", email: "", conductor: "未提供", pianist: "未提供", status: "pending" },
-            { id: 10, zone: "中苗小區", note: "大甲溪牧區", name: "大甲溪牧區聯合詩班", leader: "張天仁", email: "", conductor: "李子寧", pianist: "湯亞昕 / 孫榮恩", status: "pending" },
-            { id: 11, zone: "南投小區", note: "新望愛", name: "新望愛牧區長青聯合詩班", leader: "未提供", email: "", conductor: "田珍寶", pianist: "何燕萍", status: "pending" },
-            { id: 12, zone: "南投小區", note: "親春線", name: "親春線牧區兒童聯合詩班", leader: "未提供", email: "", conductor: "未提供", pianist: "未提供", status: "pending" },
-            { id: 13, zone: "南投小區", note: "力行線", name: "力行線牧區設清聯合詩班", leader: "楊凱琳", email: "", conductor: "田嘉燕", pianist: "陳崇儀", status: "pending" },
-            { id: 14, zone: "教區大專", note: "大專聯契", name: "西大團契聯合詩班", leader: "未提供", email: "", conductor: "未提供", pianist: "未提供", status: "pending" },
-            { id: 15, zone: "教區聯合", note: "中堅聯契", name: "西區教區中堅聯合詩班", leader: "未提供", email: "", conductor: "未提供", pianist: "未提供", status: "pending" },
-            { id: 16, zone: "教區負責人", note: "長執同工", name: "西區傳道負責人聯合詩班", leader: "未提供", email: "", conductor: "未提供", pianist: "未提供", status: "pending" }
-        ];
-
-        let activeChoirId = null;
-
-        // 3. 渲染左側名單
-        function renderChoirList(data) {
-            const listContainer = document.getElementById('choir-list');
-            if (!listContainer) return;
-            
-            listContainer.innerHTML = '';
-            data.forEach(c => {
-                const isActive = activeChoirId === c.id;
-                const statusBadge = c.status === 'submitted' 
-                    ? '<span class="text-[9px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">已提交</span>' 
-                    : '<span class="text-[9px] bg-slate-100 text-slate-400 px-2 py-0.5 rounded-full font-bold">未提交</span>';
-
-                const card = document.createElement('button');
-                card.className = `w-full text-left p-4 rounded-2xl transition-all border flex items-center justify-between group ${isActive ? 'bg-indigo-50 border-indigo-400 shadow-sm' : 'bg-white border-slate-100 hover:border-slate-200'}`;
-                card.onclick = () => selectChoir(c.id);
-                card.innerHTML = `
-                    <div class="flex items-start gap-3">
-                        <div class="mt-1.5 w-2.5 h-2.5 rounded-full shrink-0 ${getZoneColor(c.zone)}"></div>
-                        <div>
-                            <div class="text-sm font-black text-slate-800 leading-snug">${c.name}</div>
-                            <div class="text-[10px] text-slate-400 font-bold mt-0.5">${c.zone} · ${c.note}</div>
+            <!-- 實際四部座位圖 (依照傳統詩班座位排列) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                
+                <!-- 【左側區域】(指揮視角左側) -->
+                <div class="space-y-6">
+                    <!-- 女高音 Soprano (前左) -->
+                    <div class="bg-rose-50/30 p-4 rounded-2xl border border-rose-100">
+                        <h3 class="text-sm font-bold text-rose-700 mb-3 flex items-center justify-between">
+                            <span><i class="fas fa-venus mr-1.5"></i> 女高音部 (Soprano) - 前排左側</span>
+                            <span class="text-[10px] bg-rose-100 px-2 py-0.5 rounded-full">高聲部</span>
+                        </h3>
+                        <div class="grid grid-cols-3 gap-2" id="grid-soprano">
+                            <!-- JS 動態帶入名單 -->
                         </div>
                     </div>
-                    <div class="flex items-center gap-2 shrink-0">
-                        ${statusBadge}
-                        <svg class="w-4 h-4 text-slate-300 group-hover:text-indigo-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+
+                    <!-- 男高音 Tenor (後左) -->
+                    <div class="bg-sky-50/30 p-4 rounded-2xl border border-sky-100">
+                        <h3 class="text-sm font-bold text-sky-700 mb-3 flex items-center justify-between">
+                            <span><i class="fas fa-mars mr-1.5"></i> 男高音部 (Tenor) - 後排左側</span>
+                            <span class="text-[10px] bg-sky-100 px-2 py-0.5 rounded-full">中高音</span>
+                        </h3>
+                        <div class="grid grid-cols-3 gap-2" id="grid-tenor">
+                            <!-- JS 動態帶入名單 -->
+                        </div>
                     </div>
-                `;
-                listContainer.appendChild(card);
+                </div>
+
+                <!-- 【右側區域】(指揮視角右側) -->
+                <div class="space-y-6">
+                    <!-- 女低音 Alto (前右) -->
+                    <div class="bg-amber-50/30 p-4 rounded-2xl border border-amber-100">
+                        <h3 class="text-sm font-bold text-amber-700 mb-3 flex items-center justify-between">
+                            <span><i class="fas fa-venus-mars mr-1.5"></i> 女低音部 (Alto) - 前排右側</span>
+                            <span class="text-[10px] bg-amber-100 px-2 py-0.5 rounded-full">中低音</span>
+                        </h3>
+                        <div class="grid grid-cols-3 gap-2" id="grid-alto">
+                            <!-- JS 動態帶入名單 -->
+                        </div>
+                    </div>
+
+                    <!-- 男低音 Bass (後右) -->
+                    <div class="bg-slate-100/50 p-4 rounded-2xl border border-slate-200">
+                        <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center justify-between">
+                            <span><i class="fas fa-mars-double mr-1.5"></i> 男低音部 (Bass) - 後排右側</span>
+                            <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded-full">低聲部</span>
+                        </h3>
+                        <div class="grid grid-cols-3 gap-2" id="grid-bass">
+                            <!-- JS 動態帶入名單 -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 1. 練習時程與進度 -->
+        <section class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 border-b pb-4 gap-4">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 text-blue-700 w-10 h-10 rounded-xl flex items-center justify-center mr-3">
+                        <i class="fas fa-calendar-alt text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 serif">練習時程與進度表</h2>
+                        <p class="text-xs text-gray-400 mt-0.5">每月第三周 安息日晚上 19:00 - 21:00</p>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border border-blue-100 text-blue-700 px-4 py-2 rounded-2xl text-right">
+                    <span class="block text-xs font-semibold opacity-80">固定練習地點</span>
+                    <span class="text-sm font-bold"><i class="fas fa-map-marker-alt mr-1"></i>崎頂教會</span>
+                </div>
+            </div>
+
+            <!-- 進度清單 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="schedule-list">
+                <div class="schedule-item completed">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-emerald-500 mr-4 text-xl"></i>
+                        <div>
+                            <p class="text-gray-500 font-bold">04 / 11 (六) <span class="text-xs font-normal">安息日晚上</span></p>
+                            <p class="text-xs text-gray-400 font-medium">練習：主幫助我們（全曲與分部熟悉）</p>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">已完成</span>
+                </div>
+
+                <div class="schedule-item completed">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-emerald-500 mr-4 text-xl"></i>
+                        <div>
+                            <p class="text-gray-500 font-bold">05 / 09 (六) <span class="text-xs font-normal">安息日晚上</span></p>
+                            <p class="text-xs text-gray-400 font-medium">練習：你為什忙（結構與速度練習）</p>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">已完成</span>
+                </div>
+
+                <script>
+                    const upcomingDates = [
+                        { m: '06', d: '20', label: '預排練習', desc: '雙曲調和度與發聲練習 (原6/27改期)' },
+                        { m: '07', d: '25', label: '預排練習', desc: '細部強弱與呼吸配合 (原7/18改期)' },
+                        { m: '08', d: '22', label: '預排練習', desc: '背譜演練與聲部和諧 (原8/15改期)' },
+                        { m: '09', d: '19', label: '預排練習', desc: '表情記號與指揮默契' },
+                        { m: '10', d: '17', label: '預排練習', desc: '模擬獻詩站位與入退場' },
+                        { m: '10', d: '31', label: '最後總練', desc: '音樂會前崎頂教會最後加強', special: true }
+                    ];
+
+                    upcomingDates.forEach(item => {
+                        document.write(`
+                            <div class="schedule-item upcoming ${item.special ? 'highlight' : ''}">
+                                <div class="flex items-center min-w-0">
+                                    <div class="${item.special ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'} w-10 h-10 rounded-xl flex items-center justify-center font-black mr-4 text-sm shrink-0">
+                                        ${item.m}
+                                    </div>
+                                    <div class="truncate">
+                                        <p class="text-gray-800 font-bold">${item.m} / ${item.d} (六)</p>
+                                        <p class="text-xs ${item.special ? 'text-amber-700 font-bold' : 'text-gray-400'} truncate">${item.desc}</p>
+                                    </div>
+                                </div>
+                                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=【前山牧區聯合詩班】練詩提醒&dates=2026${item.m}${item.d}T190000/2026${item.m}${item.d}T210000&details=傳台百年音樂會獻詩練習。時間：19:00-21:00。地點：崎頂教會。請準時出席並攜帶詩譜。&location=崎頂教會" 
+                                   target="_blank" 
+                                   class="ml-2 bg-blue-50 text-blue-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-blue-600 hover:text-white transition-all shrink-0 flex items-center gap-1 active:scale-95">
+                                    <i class="fab fa-google"></i>日曆
+                                </a>
+                            </div>
+                        `);
+                    });
+                </script>
+            </div>
+        </section>
+
+
+        <!-- 2. 分部練習影片與詩譜下載 -->
+        <section class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 serif border-b pb-4 flex items-center justify-between">
+                <span class="flex items-center">
+                    <i class="fas fa-play-circle text-indigo-600 mr-3"></i>獻詩曲目自主練習
+                </span>
+                <span class="text-xs font-medium text-slate-400 italic">點選看譜 / 分部影片重複練習</span>
+            </h2>
+            
+            <div class="space-y-10">
+                <!-- 第一首 -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-5 gap-4">
+                        <div class="flex items-center">
+                            <span class="bg-blue-800 text-white w-7 h-7 rounded-lg flex items-center justify-center font-bold text-sm mr-3">1</span>
+                            <div>
+                                <h3 class="font-bold text-blue-950 text-lg md:text-xl">讚美詩 370 首：主幫助我們</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">經文依據：羅馬書八章 31 節</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <!-- 新增伴奏版連結 -->
+                            <a href="https://youtu.be/x5vuJHpIkYo" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-md flex items-center gap-1.5 active:scale-95">
+                                <i class="fab fa-youtube text-base"></i>『唱法』伴奏版
+                            </a>
+                            <button onclick="openSheetMusic(370)" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-md flex items-center gap-1.5 active:scale-95">
+                                <i class="fas fa-file-invoice text-base"></i>檢視 & 下載詩譜
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <a href="https://youtu.be/NHlQP3GaK1k?si=RAbs_lHtX7iaKVeZ" target="_blank" class="btn-part bg-gradient-to-br from-rose-500 to-pink-600">
+                            <span class="text-xs uppercase opacity-75 tracking-wider font-semibold mb-1">Soprano</span>
+                            <span class="font-bold text-base flex items-center gap-1">女高音 <i class="fas fa-external-link-alt text-xs"></i></span>
+                        </a>
+                        <a href="https://youtu.be/JMyaAtRuIqE?si=ByMf0G7BOEQx10zs" target="_blank" class="btn-part bg-gradient-to-br from-amber-500 to-orange-600">
+                            <span class="text-xs uppercase opacity-75 tracking-wider font-semibold mb-1">Alto</span>
+                            <span class="font-bold text-base flex items-center gap-1">女低音 <i class="fas fa-external-link-alt text-xs"></i></span>
+                        </a>
+                        <a href="https://youtu.be/Qei3S0IJNqs?si=rTL_sFrnSKuIimTx" target="_blank" class="btn-part bg-gradient-to-br from-sky-500 to-blue-600">
+                            <span class="text-xs uppercase opacity-75 tracking-wider font-semibold mb-1">Tenor</span>
+                            <span class="font-bold text-base flex items-center gap-1">男高音 <i class="fas fa-external-link-alt text-xs"></i></span>
+                        </a>
+                        <a href="https://youtu.be/jOa7HGTtoLI?si=iX4XaVCLNfO2p50Yw" target="_blank" class="btn-part bg-gradient-to-br from-slate-600 to-slate-800">
+                            <span class="text-xs uppercase opacity-75 tracking-wider font-semibold mb-1">Bass</span>
+                            <span class="font-bold text-base flex items-center gap-1">男低音 <i class="fas fa-external-link-alt text-xs"></i></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第二首 -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-5 gap-4">
+                        <div class="flex items-center">
+                            <span class="bg-purple-800 text-white w-7 h-7 rounded-lg flex items-center justify-center font-bold text-sm mr-3">2</span>
+                            <div>
+                                <h3 class="font-bold text-purple-950 text-lg md:text-xl">讚美詩 130 首：你為什忙</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">勸戒世人切勿因世俗繁華而忘卻天國恩召</p>
+                            </div>
+                        </div>
+                        
+                        <button onclick="openSheetMusic(130)" class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all shadow-md flex items-center gap-2 active:scale-95">
+                            <i class="fas fa-file-invoice mr-1 text-base"></i>檢視 & 下載詩譜
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <button onclick="triggerHymn130Placeholder('女高音')" class="btn-part bg-slate-200 text-slate-400 border border-slate-300 active:scale-100 cursor-not-allowed hover:brightness-100 shadow-none">
+                            <span class="text-xs uppercase opacity-50 font-semibold mb-1">Soprano</span>
+                            <span class="font-bold text-base text-slate-500">女高音 (建置中)</span>
+                        </button>
+                        <button onclick="triggerHymn130Placeholder('女低音')" class="btn-part bg-slate-200 text-slate-400 border border-slate-300 active:scale-100 cursor-not-allowed hover:brightness-100 shadow-none">
+                            <span class="text-xs uppercase opacity-50 font-semibold mb-1">Alto</span>
+                            <span class="font-bold text-base text-slate-500">女低音 (建置中)</span>
+                        </button>
+                        <button onclick="triggerHymn130Placeholder('男高音')" class="btn-part bg-slate-200 text-slate-400 border border-slate-300 active:scale-100 cursor-not-allowed hover:brightness-100 shadow-none">
+                            <span class="text-xs uppercase opacity-50 font-semibold mb-1">Tenor</span>
+                            <span class="font-bold text-base text-slate-500">男高音 (建置中)</span>
+                        </button>
+                        <button onclick="triggerHymn130Placeholder('男低音')" class="btn-part bg-slate-200 text-slate-400 border border-slate-300 active:scale-100 cursor-not-allowed hover:brightness-100 shadow-none">
+                            <span class="text-xs uppercase opacity-50 font-semibold mb-1">Bass</span>
+                            <span class="font-bold text-base text-slate-500">男低音 (建置中)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 最後練習成果雲端相簿 -->
+        <section class="bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
+                    <h2 class="text-2xl font-bold serif text-amber-400 flex items-center">
+                        <i class="fas fa-images mr-3"></i>最新練詩成果紀錄
+                    </h2>
+                    <span class="text-[10px] uppercase tracking-widest text-slate-500">Practice Cloud Album</span>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div class="lg:col-span-2">
+                        <div class="bg-black/40 rounded-2xl aspect-video flex flex-col items-center justify-center border border-white/10 p-6 text-center relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-cover bg-center opacity-20 filter blur-[2px]" style="background-image: url('https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=800&auto=format&fit=crop');"></div>
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-cloud-sun"></i>
+                                </div>
+                                <p class="text-lg font-bold text-white mb-2" id="album-status-title">前山牧區專屬雲端相簿</p>
+                                <p class="text-xs text-slate-300 mb-6 max-w-md">本次練習的所有合唱錄音與成果錄影，均已妥善備份至雲端相簿中，歡迎班員、指揮及司琴點擊前往觀看、上傳或下載複習！</p>
+                                <div class="flex flex-wrap justify-center gap-3">
+                                    <a id="cloud-album-link" href="https://photos.google.com" target="_blank" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 px-8 py-3 rounded-full font-black transition-all shadow-lg active:scale-95 flex items-center gap-2 text-sm">
+                                        <i class="fas fa-external-link-alt"></i> 前往【雲端相簿】觀看影音
+                                    </a>
+                                    <button onclick="toggleConfigLink()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-3 rounded-full font-bold transition-all text-xs">
+                                        <i class="fas fa-cog"></i> 設定相簿連結
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center space-y-4">
+                        <div id="config-link-box" class="bg-white/5 border border-amber-500/30 p-5 rounded-2xl hidden transition-all">
+                            <h4 class="font-bold text-amber-300 text-xs mb-2 flex items-center justify-between">
+                                <span><i class="fas fa-link mr-1"></i> 指揮/管理員設定專區</span>
+                                <button onclick="toggleConfigLink()" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+                            </h4>
+                            <input type="text" id="album-url-input" placeholder="https://..." class="w-full bg-slate-950 border border-white/20 rounded-xl px-3 py-2 text-xs text-white mb-2 focus:outline-none focus:border-amber-400">
+                            <button onclick="saveAlbumUrl()" class="w-full bg-amber-500 text-slate-950 font-bold py-1.5 rounded-lg text-xs hover:bg-amber-600 transition-colors">儲存並更新連結</button>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                            <h4 class="font-bold text-amber-300 text-sm mb-2 flex items-center">
+                                <i class="fas fa-info-circle mr-2"></i>指揮與司琴的話
+                            </h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                請至雲端相簿檢視各聲部的「平衡度」與「字音和諧度」。錄影記錄有助於大家在線上彼此聆聽，互相勸戒，口唱心和地唱出最美的讚美！
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-16 mb-8 text-center px-6">
+        <p class="text-slate-400 text-xs serif">願神悅納我們所獻上的頌讚</p>
+        <p class="text-slate-500 text-[10px] uppercase mt-1.5 tracking-widest">True Jesus Church West Taiwan Choir 100th Anniversary</p>
+    </footer>
+
+    <!-- 詩譜互動彈窗 -->
+    <div id="music-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 md:p-6 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-white w-full max-w-4xl h-[90vh] md:h-[85vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden scale-95 transition-transform duration-300" id="modal-container">
+            <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50 shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-600 text-white w-9 h-9 rounded-xl flex items-center justify-center font-bold" id="modal-hymn-number">370</div>
+                    <div>
+                        <h3 class="font-black text-slate-800 text-lg md:text-xl serif" id="modal-hymn-title">讚美詩 370 首：主幫助我們</h3>
+                        <p class="text-xs text-slate-400" id="modal-hymn-subtitle">五線譜與歌詞在線對照</p>
+                    </div>
+                </div>
+                <button onclick="closeSheetMusic()" class="w-10 h-10 rounded-full hover:bg-slate-200 text-slate-400 hover:text-slate-700 transition-colors flex items-center justify-center text-lg active:scale-95"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="flex border-b border-slate-100 shrink-0 bg-white">
+                <button onclick="switchTab('score')" id="tab-score" class="flex-1 py-4 text-center font-bold text-sm border-b-2 border-blue-600 text-blue-600 transition-colors">五線詩譜</button>
+                <button onclick="switchTab('numbered')" id="tab-numbered" class="flex-1 py-4 text-center font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 transition-colors">簡譜對照</button>
+                <button onclick="switchTab('lyrics')" id="tab-lyrics" class="flex-1 py-4 text-center font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 transition-colors">大字體歌詞</button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-50/50 no-scrollbar">
+                <div id="content-score" class="space-y-6">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center overflow-x-auto">
+                        <div class="min-w-[600px] w-full max-w-2xl" id="svg-score-container"></div>
+                    </div>
+                    <div class="text-center"><a id="download-score-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 rounded-xl font-bold text-sm transition-all shadow-md active:scale-95"><i class="fas fa-file-pdf text-rose-400"></i> 下載官方完整五線譜 PDF</a></div>
+                </div>
+                <div id="content-numbered" class="space-y-6 hidden">
+                    <div class="bg-amber-50/60 p-6 md:p-8 rounded-2xl border border-amber-100 font-mono text-slate-700 max-w-2xl mx-auto space-y-4 shadow-inner" id="numbered-score-container"></div>
+                    <div class="text-center"><a id="download-numbered-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 rounded-xl font-bold text-sm transition-all shadow-md active:scale-95"><i class="fas fa-file-pdf text-amber-400"></i> 下載官方完整簡譜 PDF</a></div>
+                </div>
+                <div id="content-lyrics" class="hidden max-w-xl mx-auto">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 text-center space-y-6">
+                        <div id="lyrics-container" class="space-y-6 text-lg md:text-xl text-slate-800 font-medium leading-relaxed tracking-wider serif"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 吐司提示 -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-6 py-3.5 rounded-2xl shadow-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 border border-white/10">
+        <div class="text-amber-400" id="toast-icon"><i class="fas fa-info-circle"></i></div>
+        <span class="text-sm font-bold" id="toast-msg">提示訊息</span>
+    </div>
+
+    <script>
+        // 依據圖片 S__13205539.jpg 彙整之四部完整名單
+        const choirMembers = {
+            soprano: [
+                "周筱萍", "胡甄心", "游湘萍", "周宜蓁", "李欣怡", 
+                "張蓉惠", "黃琬珊", "談翠玉", "黃淑娟", "楊佩萱", 
+                "楊巧萱", "陳舒慈", "胡英蘭", "伍惠美", "王偉娟"
+            ],
+            alto: [
+                "林茜草", "廖瑞靈", "廖瑞祺", "黃欣琪", "蔣秀枝", 
+                "林佳欣", "宗美娟", "馬麗芳", "林雅婷", "范秀美", "羅琳"
+            ],
+            tenor: [
+                "張金德", "林俊傑", "楊凱恩", "鍾霖恩", "胡夢凡", 
+                "高亦豪", "胡瑞霖", "張益榮", "白米加"
+            ],
+            bass: [
+                "宗恆宇", "林約特", "孫銘恩", "王翔恩", "陳微慎", 
+                "林新民", "伍忠誠"
+            ]
+        };
+
+        // 倒數計時
+        function updateCountdown() {
+            const targetDate = new Date('November 1, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById('days').innerText = days > 0 ? days : 0;
+        }
+        setInterval(updateCountdown, 1000 * 60);
+        updateCountdown();
+
+        // 渲染點名座位系統
+        function renderAttendanceGrid() {
+            const logs = getAttendanceLogs();
+            
+            const sections = ['soprano', 'alto', 'tenor', 'bass'];
+            sections.forEach(sec => {
+                const container = document.getElementById(`grid-${sec}`);
+                container.innerHTML = "";
+                
+                choirMembers[sec].forEach(name => {
+                    const isPresent = !!logs[name];
+                    const btn = document.createElement('button');
+                    btn.innerText = name;
+                    
+                    // 根據出席狀態與聲部上色
+                    if (isPresent) {
+                        btn.className = "seat-btn seat-present";
+                        // 附加出席時間提示
+                        const timeStr = logs[name].split(' ')[1] || '';
+                        btn.innerHTML = `<span>${name}</span><span class="text-[9px] opacity-75 font-normal mt-0.5">${timeStr.substring(0,5)} 已到</span>`;
+                    } else {
+                        const classMap = { soprano: 'seat-absent-S', alto: 'seat-absent-A', tenor: 'seat-absent-T', bass: 'seat-absent-B' };
+                        btn.className = `seat-btn ${classMap[sec]}`;
+                    }
+                    
+                    btn.onclick = () => toggleAttendance(name);
+                    container.appendChild(btn);
+                });
             });
         }
 
-        // 小區視覺標記色
-        function getZoneColor(zone) {
-            if (zone === "復興小區") return "bg-amber-500";
-            if (zone === "竹苗小區") return "bg-emerald-500";
-            if (zone === "中苗小區") return "bg-purple-500";
-            if (zone === "南投小區") return "bg-rose-500";
-            return "bg-indigo-500"; // 教區
+        // 後台讀取與點名變更
+        function getAttendanceLogs() {
+            return JSON.parse(localStorage.getItem('choir_attendance_logs') || '{}');
         }
 
-        // 搜尋篩選功能
-        function filterChoirs() {
-            const term = document.getElementById('search-input').value.toLowerCase();
-            const filtered = choirs.filter(c => 
-                c.name.toLowerCase().includes(term) || 
-                c.zone.toLowerCase().includes(term) || 
-                c.conductor.toLowerCase().includes(term) ||
-                c.leader.toLowerCase().includes(term)
-            );
-            renderChoirList(filtered);
+        function toggleAttendance(name) {
+            const logs = getAttendanceLogs();
+            if (logs[name]) {
+                delete logs[name];
+                showToast(`❌ 已取消 ${name} 的出席紀錄`);
+            } else {
+                const now = new Date();
+                const timeStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+                logs[name] = timeStr;
+                showToast(`✅ ${name} 已成功簽到！時間：${timeStr.split(' ')[1]}`);
+            }
+            localStorage.setItem('choir_attendance_logs', JSON.stringify(logs));
+            renderAttendanceGrid();
         }
 
-        // 4. 點選詩班後更新右側詳細資訊面板
-        function selectChoir(id) {
-            activeChoirId = id;
-            const choir = choirs.find(c => c.id === id);
-            const detailPanel = document.getElementById('detail-panel');
-            if (!choir || !detailPanel) return;
+        // 匯出後台紀錄為 CSV 檔案
+        function exportAttendance() {
+            const logs = getAttendanceLogs();
+            let csvContent = "\uFEFF職稱,姓名,聲部,出席時間\n";
+            
+            const sections = { '女高音': 'soprano', '女低音': 'alto', '男高音': 'tenor', '男低音': 'bass' };
+            for (let label in sections) {
+                let secKey = sections[label];
+                choirMembers[secKey].forEach(name => {
+                    const time = logs[name] || "未出席";
+                    csvContent += `班員,${name},${label},${time}\n`;
+                });
+            }
 
-            // 重新繪製左側保持高亮
-            filterChoirs();
-
-            const isSubmitted = choir.status === 'submitted';
-
-            detailPanel.className = "bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex-grow flex flex-col justify-between animate-in fade-in zoom-in duration-300";
-            detailPanel.innerHTML = `
-                <div class="space-y-6">
-                    <!-- 詩班小區頭部 -->
-                    <div class="flex justify-between items-start border-b border-slate-100 pb-5">
-                        <div>
-                            <span class="text-[10px] font-black uppercase text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">${choir.zone}</span>
-                            <h3 class="text-2xl font-black text-slate-900 mt-3 leading-tight">${choir.name}</h3>
-                            <p class="text-xs text-slate-400 font-bold mt-1">所屬牧區：${choir.note}</p>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-[10px] font-bold text-slate-300 block">STATUS</span>
-                            <span class="text-xs font-black uppercase ${isSubmitted ? 'text-green-500' : 'text-amber-500'}">${isSubmitted ? '● 已上傳練詩影音' : '○ 影音待上傳'}</span>
-                        </div>
-                    </div>
-
-                    <!-- 幹部名冊區 -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">班負責 / 聯絡員</span>
-                            <span class="text-sm font-black text-slate-800">${choir.leader}</span>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">指揮老師</span>
-                            <span class="text-sm font-black text-slate-800">${choir.conductor}</span>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">鋼琴伴奏</span>
-                            <span class="text-sm font-black text-slate-800">${choir.pianist}</span>
-                        </div>
-                    </div>
-
-                    <!-- 操作區 -->
-                    <div class="bg-indigo-50/50 p-6 rounded-[2rem] border border-indigo-100/50 flex flex-col md:flex-row items-center gap-6">
-                        <div class="flex-grow text-left space-y-2">
-                            <h5 class="text-sm font-black text-indigo-950">練詩動態影音提交管道</h5>
-                            <p class="text-xs text-indigo-900/70 leading-relaxed font-medium">請將練習時錄製的影音、文檔及老照片，整合至同一個資料夾，點擊右側按鈕即可提交至公關宣傳組雲端硬碟。</p>
-                        </div>
-                        <div class="shrink-0 flex flex-col items-center gap-2 bg-white p-3 rounded-2xl border border-indigo-100/80 shadow-md">
-                            <!-- 真實 QR Code 對應該詩班的個別提交系統 (可模擬) -->
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=160&data=${encodeURIComponent('https://tjcdaxiinformation.github.io/TJC-West-Choir-Portal/upload?id=' + choir.id)}" class="w-20 h-20" alt="Submit QR" />
-                            <span class="text-[8px] text-slate-400 font-black uppercase tracking-widest">掃描直接提交</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 送出按鈕 -->
-                <div class="mt-8 pt-5 border-t border-slate-100 flex flex-col md:flex-row gap-3">
-                    <button onclick="submitDemo(${choir.id})" class="flex-grow bg-slate-900 text-white py-4 px-6 rounded-2xl font-black text-xs hover:bg-indigo-600 transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
-                        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
-                        開啟雲端硬碟直接上傳影音
-                    </button>
-                    ${!isSubmitted ? `
-                        <button onclick="simulateUpload(${choir.id})" class="bg-emerald-600 text-white py-4 px-6 rounded-2xl font-black text-xs hover:bg-emerald-500 transition-all shadow-md active:scale-95 shrink-0">
-                            模擬完成上傳
-                        </button>
-                    ` : `
-                        <button class="bg-slate-100 text-slate-400 py-4 px-6 rounded-2xl font-black text-xs cursor-not-allowed shrink-0" disabled>
-                            ✓ 感謝您已提交
-                        </button>
-                    `}
-                </div>
-            `;
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `前山牧區詩班出席紀錄_${new Date().toLocaleDateString()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
-        // 模擬上傳完成 (展示看板狀態更新)
-        function simulateUpload(id) {
-            const choir = choirs.find(c => c.id === id);
-            if (choir) {
-                choir.status = 'submitted';
-                selectChoir(id);
-                updateStats();
+        // 重設點名
+        function resetAttendance() {
+            if(confirm("確定要清除今天的出席簽到紀錄嗎？")) {
+                localStorage.removeItem('choir_attendance_logs');
+                renderAttendanceGrid();
+                showToast("🧹 已重設所有出席紀錄");
             }
         }
 
-        // 更新頂部看板數字
-        function updateStats() {
-            const submittedCount = choirs.filter(c => c.status === 'submitted').length;
-            const pendingCount = choirs.length - submittedCount;
-            document.getElementById('count-submitted').innerText = submittedCount;
-            document.getElementById('count-pending').innerText = pendingCount;
-        }
-
-        // Demo上傳連結點擊
-        function submitDemo(id) {
-            // 在實際事工中，這裡可改為 Google Drive 收集夾網址
-            window.open(`https://tjcdaxiinformation.github.io/TJC-West-History/`, '_blank');
-        }
-
-        // 頁面初始化
-        renderChoirList(choirs);
-        updateStats();
+        // 詩譜歌詞庫 (略，與前版相同)
+        const hymnDatabase = { 370: { number: "370", title: "讚美詩 370 首：主幫助我們", subtitle: "經文源自《羅馬書》八章31節", lyrics: `<p>靠主常喜樂...</p>`, numbered: `<p>5 | 3 . 4 5...</p>`, pdfUrl: "https://sacredmusic.tjc.org.tw/hymn/370", svgScore: `<svg viewBox="0 0 600 240"><text x="20" y="50">𝄢 370...</text></svg>` }, 130: { number: "130", title: "讚美詩 130 首：你為什忙", subtitle: "勸戒世人切勿因世俗繁華而忘卻天國恩召", lyrics: `<p>親愛的朋友！你為什麼忙？...</p>`, numbered: `<p>3 4 | 5 - 5...</p>`, pdfUrl: "https://sacredmusic.tjc.org.tw/hymn/130", svgScore: `<svg viewBox="0 0 600 240"><text x="20" y="50">𝄢 130...</text></svg>` } };
+        function openSheetMusic(number) { const data = hymnDatabase[number]; if (!data) return; document.getElementById('modal-hymn-number').innerText = data.number; document.getElementById('modal-hymn-title').innerText = data.title; document.getElementById('modal-hymn-subtitle').innerText = data.subtitle; document.getElementById('lyrics-container').innerHTML = data.lyrics; document.getElementById('numbered-score-container').innerHTML = data.numbered; document.getElementById('svg-score-container').innerHTML = data.svgScore; document.getElementById('download-score-link').href = data.pdfUrl; document.getElementById('download-numbered-link').href = data.pdfUrl; switchTab('score'); const modal = document.getElementById('music-modal'); const container = document.getElementById('modal-container'); modal.classList.remove('opacity-0', 'pointer-events-none'); container.classList.remove('scale-95'); }
+        function closeSheetMusic() { const modal = document.getElementById('music-modal'); const container = document.getElementById('modal-container'); modal.classList.add('opacity-0', 'pointer-events-none'); container.classList.add('scale-95'); }
+        function switchTab(t) { ['score', 'numbered', 'lyrics'].forEach(x => { const b = document.getElementById(`tab-${x}`); const c = document.getElementById(`content-${x}`); if(x===t){ b.className="flex-1 py-4 text-center font-bold text-sm border-b-2 border-blue-600 text-blue-600"; c.classList.remove('hidden'); }else{ b.className="flex-1 py-4 text-center font-bold text-sm border-b-2 border-transparent text-slate-500"; c.classList.add('hidden'); } }); }
+        function triggerHymn130Placeholder(p) { showToast(`🎵 讚美詩130首【${p}】練習影片製作中！`); }
+        function showToast(m) { const t = document.getElementById('toast'); document.getElementById('toast-msg').innerText = m; t.classList.remove('opacity-0', 'pointer-events-none'); setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 3000); }
+        
+        window.addEventListener('DOMContentLoaded', renderAttendanceGrid);
     </script>
 </body>
 </html>
