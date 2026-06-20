@@ -107,6 +107,40 @@
                 </div>
             </div>
 
+            <!-- ================= 全新：出席率即時統計看板 ================= -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                <!-- 全體總計 -->
+                <div class="bg-gradient-to-br from-slate-800 to-indigo-950 text-white p-4 rounded-2xl shadow-lg border border-slate-700/50 text-center flex flex-col justify-between min-h-[110px]">
+                    <span class="text-[11px] font-bold text-slate-300 tracking-wider">全體總出席率</span>
+                    <span id="stat-total-pct" class="text-3xl font-black text-amber-300 my-1">0%</span>
+                    <span id="stat-total-count" class="text-[10px] text-slate-400">0 / 0 人出席</span>
+                </div>
+                <!-- 女高音 -->
+                <div class="bg-rose-50 border border-rose-200 p-4 rounded-2xl text-center flex flex-col justify-between min-h-[110px]">
+                    <span class="text-[11px] font-bold text-rose-800 tracking-wider">女高音 (S)</span>
+                    <span id="stat-soprano-pct" class="text-3xl font-black text-rose-600 my-1">0%</span>
+                    <span id="stat-soprano-count" class="text-[10px] text-rose-500">0 / 0 人出席</span>
+                </div>
+                <!-- 女低音 -->
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-center flex flex-col justify-between min-h-[110px]">
+                    <span class="text-[11px] font-bold text-amber-800 tracking-wider">女低音 (A)</span>
+                    <span id="stat-alto-pct" class="text-3xl font-black text-amber-600 my-1">0%</span>
+                    <span id="stat-alto-count" class="text-[10px] text-amber-500">0 / 0 人出席</span>
+                </div>
+                <!-- 男高音 -->
+                <div class="bg-sky-50 border border-sky-200 p-4 rounded-2xl text-center flex flex-col justify-between min-h-[110px]">
+                    <span class="text-[11px] font-bold text-sky-800 tracking-wider">男高音 (T)</span>
+                    <span id="stat-tenor-pct" class="text-3xl font-black text-sky-600 my-1">0%</span>
+                    <span id="stat-tenor-count" class="text-[10px] text-sky-500">0 / 0 人出席</span>
+                </div>
+                <!-- 男低音 -->
+                <div class="bg-violet-50 border border-violet-200 p-4 rounded-2xl text-center flex flex-col justify-between min-h-[110px]">
+                    <span class="text-[11px] font-bold text-violet-800 tracking-wider">男低音 (B)</span>
+                    <span id="stat-bass-pct" class="text-3xl font-black text-violet-600 my-1">0%</span>
+                    <span id="stat-bass-count" class="text-[10px] text-violet-500">0 / 0 人出席</span>
+                </div>
+            </div>
+
             <!-- 詩班三排座位實境視圖 (上方為後排，下方為前排與觀眾席) -->
             <div class="overflow-x-auto pb-4 no-scrollbar">
                 <div class="space-y-6 min-w-[760px] max-w-5xl mx-auto px-2">
@@ -134,7 +168,7 @@
                         </div>
                     </div>
 
-                    <!-- 【第二排】女高(左)、女低(右) - 在中間 (中排) -->
+                    <!-- 【第二排】女高(左)、女低(right) - 在中間 (中排) -->
                     <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
                         <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第二排 (中排)</h3>
                         <div class="grid grid-cols-2 gap-8">
@@ -157,7 +191,7 @@
                         </div>
                     </div>
 
-                    <!-- 【第一排】女高(左)、女低(右) - 在最下方 (前排) -->
+                    <!-- 【第一排】女高(左)、女低(right) - 在最下方 (前排) -->
                     <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
                         <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第一排 (前排)</h3>
                         <div class="grid grid-cols-2 gap-8">
@@ -503,7 +537,6 @@
         // ==========================================
         // 【重要】班員名單修改專區
         // ==========================================
-        // 如果需要新增、刪除、或更改姓名，請直接編輯以下陣列：
         const rawChoirMembers = {
             soprano: [ // 女高音部 (Soprano)
                 "周筱萍", "胡甄心", "游湘萍", "周宜蓁", "李欣怡", 
@@ -511,7 +544,7 @@
                 "楊巧萱", "陳舒慈", "胡英蘭", "伍惠美", "王偉娟"
             ],
             alto: [ // 女低音部 (Alto)
-                "林茜葦", "廖瑞靈", "廖瑞祺", "黃欣琪", "蔣秀枝", 
+                "林茜草", "廖瑞靈", "廖瑞祺", "黃欣琪", "蔣秀枝", 
                 "林佳欣", "宗美娟", "馬麗芳", "林雅婷", "范秀美", "羅琳"
             ],
             tenor: [ // 男高音部 (Tenor)
@@ -535,7 +568,7 @@
         setInterval(updateCountdown, 1000 * 60);
         updateCountdown();
 
-        // 建立預設座位排序 layout 對照表 (左半部女高與男高、右半部女低與男低)
+        // 建立預設座位排序 layout 對照表
         function getDefaultLayout() {
             const layout = {};
             
@@ -581,10 +614,50 @@
             return defaults;
         }
 
+        // 即時出席率與數據看板更新計算
+        function updateLiveStatistics(logs) {
+            const stats = {
+                soprano: { present: 0, total: rawChoirMembers.soprano.length },
+                alto: { present: 0, total: rawChoirMembers.alto.length },
+                tenor: { present: 0, total: rawChoirMembers.tenor.length },
+                bass: { present: 0, total: rawChoirMembers.bass.length },
+                total: { present: 0, total: 0 }
+            };
+
+            // 比對 logs 計算各聲部出席人數
+            for (let part in rawChoirMembers) {
+                rawChoirMembers[part].forEach(name => {
+                    if (logs[name]) {
+                        stats[part].present++;
+                    }
+                });
+            }
+
+            // 加總全體
+            stats.total.total = stats.soprano.total + stats.alto.total + stats.tenor.total + stats.bass.total;
+            stats.total.present = stats.soprano.present + stats.alto.present + stats.tenor.present + stats.bass.present;
+
+            // 動態渲染至五張看板卡片上
+            const keys = ['total', 'soprano', 'alto', 'tenor', 'bass'];
+            keys.forEach(key => {
+                const pctEl = document.getElementById(`stat-${key}-pct`);
+                const countEl = document.getElementById(`stat-${key}-count`);
+                if (pctEl && countEl) {
+                    const data = stats[key];
+                    const pct = data.total > 0 ? Math.round((data.present / data.total) * 100) : 0;
+                    pctEl.innerText = `${pct}%`;
+                    countEl.innerText = `${data.present} / ${data.total} 人出席`;
+                }
+            });
+        }
+
         // 渲染點名座位圖與後台編輯面板
         function renderAttendanceAndAdmin() {
             const logs = getAttendanceLogs();
             const layout = getSeatLayout();
+
+            // 即時更新出席率統計看板
+            updateLiveStatistics(logs);
 
             // 定義需要清空的 grid 容器
             const grids = {
@@ -630,13 +703,11 @@
                     if (isPresent) {
                         btn.className = "seat-btn seat-present";
                         const timeStr = logs[name].split(' ')[1] || '';
-                        // 已簽到：大字直寫名字，下方橫寫報到時間
                         btn.innerHTML = `
                             <span class="vertical-name font-black text-sm tracking-widest leading-none mt-1">${name}</span>
                             <span class="text-[9px] scale-90 bg-emerald-700 px-1 py-0.5 rounded leading-none mb-1 shadow-sm truncate w-10 text-center">${timeStr.substring(0,5)}</span>
                         `;
                     } else {
-                        // 四聲部缺席背景底色
                         const partColors = { 
                             soprano: 'seat-absent-S', 
                             alto: 'seat-absent-A', 
@@ -645,7 +716,6 @@
                         };
                         const colorClass = partColors[member.part] || 'seat-absent-B';
                         btn.className = `seat-btn ${colorClass}`;
-                        // 未簽到：大字直寫名字，下方橫寫座次序
                         btn.innerHTML = `
                             <span class="vertical-name font-black text-sm tracking-widest leading-none mt-1 opacity-90">${name}</span>
                             <span class="text-[8px] opacity-40 leading-none mb-1.5 font-normal">席 ${member.index}</span>
@@ -661,7 +731,6 @@
             const adminContainer = document.getElementById('admin-member-list');
             adminContainer.innerHTML = "";
 
-            // 將所有班員以名字排序呈現在後台
             const allNames = Object.keys(layout).sort();
             allNames.forEach(name => {
                 const config = layout[name];
