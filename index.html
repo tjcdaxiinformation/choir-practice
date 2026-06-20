@@ -48,7 +48,7 @@
         .seat-absent-T { @apply bg-sky-50 border-sky-300 text-sky-800 hover:bg-sky-100/70; }
         .seat-absent-B { @apply bg-violet-50 border-violet-300 text-violet-800 hover:bg-violet-100/70; }
         
-        /* 現場出席點亮翡翠綠 */
+        /* 現場出席點亮綠色 */
         .seat-present { @apply bg-emerald-600 text-white border-emerald-700 shadow-md ring-2 ring-emerald-300 hover:bg-emerald-700; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -82,7 +82,7 @@
 
     <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
 
-        <!-- ================= 全新：現場平板三排式點名系統 ================= -->
+        <!-- ================= 現場平板三排式點名系統 (面向下方觀眾席) ================= -->
         <section class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100 overflow-hidden">
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 border-b pb-4 gap-4">
                 <div class="flex items-center">
@@ -90,8 +90,8 @@
                         <i class="fas fa-tablet-alt text-lg"></i>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-800 serif">詩班出席現場點名（三排合唱站位）</h2>
-                        <p class="text-xs text-gray-400 mt-0.5">請班員在螢幕上點擊自己座位以亮起綠燈；後台會同步記錄報到時間</p>
+                        <h2 class="text-2xl font-bold text-gray-800 serif">詩班出席現場點名（舞台站位・面向觀眾席）</h2>
+                        <p class="text-xs text-gray-400 mt-0.5">此視角為「舞台上向台下看」：上方為後排，下方為前排及觀眾席</p>
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-2">
@@ -107,83 +107,11 @@
                 </div>
             </div>
 
-            <!-- 舞台最前方指標 -->
-            <div class="max-w-3xl mx-auto mb-6 text-center">
-                <!-- 聖職/指揮/司琴席 -->
-                <div class="grid grid-cols-4 gap-2 max-w-xl mx-auto text-xs font-bold mb-4">
-                    <div class="bg-slate-800 text-slate-200 p-2 rounded-xl flex flex-col justify-center">
-                        <span class="text-[9px] opacity-60">班負責</span>
-                        <span>林茜葦</span>
-                    </div>
-                    <div class="bg-indigo-900 text-amber-300 p-2 rounded-xl flex flex-col justify-center ring-2 ring-indigo-200">
-                        <span class="text-[9px] opacity-60">指揮</span>
-                        <span>王鴻志</span>
-                    </div>
-                    <div class="bg-indigo-900 text-amber-300 p-2 rounded-xl flex flex-col justify-center ring-2 ring-indigo-200">
-                        <span class="text-[9px] opacity-60">司琴</span>
-                        <span>孔思恩</span>
-                    </div>
-                    <div class="bg-indigo-900 text-amber-300 p-2 rounded-xl flex flex-col justify-center ring-2 ring-indigo-200">
-                        <span class="text-[9px] opacity-60">司琴</span>
-                        <span>陳箴</span>
-                    </div>
-                </div>
-                <div class="bg-slate-100 border border-slate-200 rounded-full py-1.5 px-6 text-xs font-bold text-slate-500 tracking-widest uppercase">
-                    ─── 聖台前緣 / 舞台正前方 ───
-                </div>
-            </div>
-
-            <!-- 詩班三排座位實境視圖 (附帶防擠壓橫向滾動容器) -->
+            <!-- 詩班三排座位實境視圖 (上方為後排，下方為前排與觀眾席) -->
             <div class="overflow-x-auto pb-4 no-scrollbar">
                 <div class="space-y-6 min-w-[760px] max-w-5xl mx-auto px-2">
                     
-                    <!-- 【第一排】女高(左)、女低(右) -->
-                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
-                        <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第一排 (前排)</h3>
-                        <div class="grid grid-cols-2 gap-8">
-                            <!-- 第一排 左邊 (女高音前排) -->
-                            <div class="border-r border-dashed border-slate-200 pr-2">
-                                <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
-                                    <span>女高音 (前)</span>
-                                    <span class="opacity-50">Soprano R1</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row1-left"></div>
-                            </div>
-                            <!-- 第一排 右邊 (女低音前排) -->
-                            <div>
-                                <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
-                                    <span>女低音 (前)</span>
-                                    <span class="opacity-50">Alto R1</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row1-right"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 【第二排】女高(左)、女低(右) -->
-                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
-                        <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第二排 (中排)</h3>
-                        <div class="grid grid-cols-2 gap-8">
-                            <!-- 第二排 左邊 (女高音中排) -->
-                            <div class="border-r border-dashed border-slate-200 pr-2">
-                                <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
-                                    <span>女高音 (中)</span>
-                                    <span class="opacity-50">Soprano R2</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row2-left"></div>
-                            </div>
-                            <!-- 第二排 右邊 (女低音中排) -->
-                            <div>
-                                <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
-                                    <span>女低音 (中)</span>
-                                    <span class="opacity-50">Alto R2</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row2-right"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 【第三排】男高弟兄(左)、男低弟兄(右) -->
+                    <!-- 【第三排】男高弟兄(左)、男低弟兄(右) - 在最上方 (後排) -->
                     <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200">
                         <h3 class="text-xs font-bold text-slate-500 mb-3 tracking-widest uppercase text-center">第三排 (後排 - 弟兄聲部)</h3>
                         <div class="grid grid-cols-2 gap-8">
@@ -206,6 +134,78 @@
                         </div>
                     </div>
 
+                    <!-- 【第二排】女高(左)、女低(右) - 在中間 (中排) -->
+                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
+                        <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第二排 (中排)</h3>
+                        <div class="grid grid-cols-2 gap-8">
+                            <!-- 第二排 左邊 (女高音中排) -->
+                            <div class="border-r border-dashed border-slate-200 pr-2">
+                                <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
+                                    <span>女高音 (中)</span>
+                                    <span class="opacity-50">Soprano R2</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row2-left"></div>
+                            </div>
+                            <!-- 第二排 右邊 (女低音中排) -->
+                            <div>
+                                <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
+                                    <span>女低音 (中)</span>
+                                    <span class="opacity-50">Alto R2</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row2-right"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 【第一排】女高(左)、女低(右) - 在最下方 (前排) -->
+                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
+                        <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第一排 (前排)</h3>
+                        <div class="grid grid-cols-2 gap-8">
+                            <!-- 第一排 左邊 (女高音前排) -->
+                            <div class="border-r border-dashed border-slate-200 pr-2">
+                                <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
+                                    <span>女高音 (前)</span>
+                                    <span class="opacity-50">Soprano R1</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row1-left"></div>
+                            </div>
+                            <!-- 第一排 右邊 (女低音前排) -->
+                            <div>
+                                <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
+                                    <span>女低音 (前)</span>
+                                    <span class="opacity-50">Alto R1</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row1-right"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 舞台最前方指標與指揮/司琴席 (移至最下方，面對觀眾席) -->
+            <div class="max-w-3xl mx-auto mt-6 text-center">
+                <div class="bg-slate-100 border border-slate-200 rounded-full py-1.5 px-6 text-xs font-bold text-slate-500 tracking-widest uppercase mb-4">
+                    ─── 聖台前緣 / 面對下方觀眾席 ───
+                </div>
+                <!-- 聖職/指揮/司琴席 -->
+                <div class="grid grid-cols-4 gap-2 max-w-xl mx-auto text-xs font-bold">
+                    <div class="bg-slate-800 text-slate-200 p-2 rounded-xl flex flex-col justify-center">
+                        <span class="text-[9px] opacity-60">班負責</span>
+                        <span>林茜草</span>
+                    </div>
+                    <div class="bg-indigo-900 text-amber-300 p-2 rounded-xl flex flex-col justify-center ring-2 ring-indigo-200">
+                        <span class="text-[9px] opacity-60">指揮</span>
+                        <span>王鴻志</span>
+                    </div>
+                    <div class="bg-indigo-900 text-amber-300 p-2 rounded-xl flex flex-col justify-center ring-2 ring-indigo-200">
+                        <span class="text-[9px] opacity-60">司琴</span>
+                        <span>孔思恩</span>
+                    </div>
+                    <div class="bg-indigo-900 text-amber-300 p-2 rounded-xl flex flex-col justify-center ring-2 ring-indigo-200">
+                        <span class="text-[9px] opacity-60">司琴</span>
+                        <span>陳箴</span>
+                    </div>
                 </div>
             </div>
 
@@ -275,9 +275,9 @@
 
                 <script>
                     const upcomingDates = [
-                        { m: '06', d: '20', label: '預排練習', desc: '雙曲調和度與發聲練習' },
-                        { m: '07', d: '25', label: '預排練習', desc: '細部強弱與呼吸配合 ' },
-                        { m: '08', d: '22', label: '預排練習', desc: '背譜演練與聲部和諧 ' },
+                        { m: '06', d: '20', label: '預排練習', desc: '雙曲調和度與發聲練習 (原6/27改期)' },
+                        { m: '07', d: '25', label: '預排練習', desc: '細部強弱與呼吸配合 (原7/18改期)' },
+                        { m: '08', d: '22', label: '預排練習', desc: '背譜演練與聲部和諧 (原8/15改期)' },
                         { m: '09', d: '19', label: '預排練習', desc: '表情記號與指揮默契' },
                         { m: '10', d: '17', label: '預排練習', desc: '模擬獻詩站位與入退場' },
                         { m: '10', d: '31', label: '最後總練', desc: '音樂會前崎頂教會最後加強', special: true }
@@ -500,22 +500,25 @@
     </div>
 
     <script>
-        // 依據圖片 S__13205539.jpg 彙整之所有班員完整名單
+        // ==========================================
+        // 【重要】班員名單修改專區
+        // ==========================================
+        // 如果需要新增、刪除、或更改姓名，請直接編輯以下陣列：
         const rawChoirMembers = {
-            soprano: [
+            soprano: [ // 女高音部 (Soprano)
                 "周筱萍", "胡甄心", "游湘萍", "周宜蓁", "李欣怡", 
                 "張蓉惠", "黃琬珊", "談翠玉", "黃淑娟", "楊佩萱", 
                 "楊巧萱", "陳舒慈", "胡英蘭", "伍惠美", "王偉娟"
             ],
-            alto: [
-                "林茜葦", "廖瑞靈", "廖瑞祺", "黃欣琪", "蔣秀枝", 
+            alto: [ // 女低音部 (Alto)
+                "林茜草", "廖瑞靈", "廖瑞祺", "黃欣琪", "蔣秀枝", 
                 "林佳欣", "宗美娟", "馬麗芳", "林雅婷", "范秀美", "羅琳"
             ],
-            tenor: [
+            tenor: [ // 男高音部 (Tenor)
                 "張金德", "林俊傑", "楊凱恩", "鍾霖恩", "胡夢凡", 
                 "高亦豪", "胡瑞霖", "張益榮", "白米加"
             ],
-            bass: [
+            bass: [ // 男低音部 (Bass)
                 "宗恆宇", "林約特", "孫銘恩", "王翔恩", "陳微慎", 
                 "林新民", "伍忠誠"
             ]
@@ -532,7 +535,7 @@
         setInterval(updateCountdown, 1000 * 60);
         updateCountdown();
 
-        // 建立預設座位排序 layout 對照表
+        // 建立預設座位排序 layout 對照表 (左半部女高與男高、右半部女低與男低)
         function getDefaultLayout() {
             const layout = {};
             
@@ -595,7 +598,7 @@
 
             // 清空舊 HTML
             for (let key in grids) {
-                grids[key].innerHTML = "";
+                if (grids[key]) grids[key].innerHTML = "";
             }
 
             // 將班員分類裝箱
@@ -650,7 +653,7 @@
                     }
 
                     btn.onclick = () => toggleAttendance(name);
-                    grids[key].appendChild(btn);
+                    if (grids[key]) grids[key].appendChild(btn);
                 });
             }
 
@@ -704,7 +707,7 @@
             const layout = getSeatLayout();
             for (let name in layout) {
                 const rowVal = parseInt(document.getElementById(`admin-row-${name}`).value);
-                const sideVal = document.getElementById(`grid-side-${name}` || `admin-side-${name}`).value;
+                const sideVal = document.getElementById(`admin-side-${name}`).value;
                 const idxVal = parseInt(document.getElementById(`admin-idx-${name}`).value) || 1;
 
                 layout[name].row = rowVal;
