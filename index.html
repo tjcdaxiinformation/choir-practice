@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght=300;400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
         
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -28,16 +28,28 @@
         .upcoming { @apply border-l-blue-500 shadow-sm; }
         .highlight { @apply border-l-amber-500 ring-2 ring-amber-200; }
 
-        /* 詩班座位按鈕樣式 */
-        .seat-btn {
-            @apply p-2 rounded-xl text-xs font-bold transition-all duration-200 border text-center flex flex-col items-center justify-center h-14 shadow-sm active:scale-90;
+        /* 直立式站位姓名 */
+        .vertical-name {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 0.15em;
         }
-        .seat-absent-S { @apply bg-rose-50/50 text-rose-700 border-rose-200 hover:bg-rose-100; }
-        .seat-absent-A { @apply bg-amber-50/50 text-amber-700 border-amber-200 hover:bg-amber-100; }
-        .seat-absent-T { @apply bg-sky-50/50 text-sky-700 border-sky-200 hover:bg-sky-100; }
-        .seat-absent-B { @apply bg-slate-50/50 text-slate-700 border-slate-200 hover:bg-slate-100; }
+
+        /* 詩班座位按鈕直立樣式與四聲部專屬底色 */
+        .seat-btn {
+            @apply flex flex-col items-center justify-between py-3 px-1 rounded-2xl border text-center font-bold transition-all duration-200 shadow-sm active:scale-90 select-none;
+            width: 3.125rem; /* ~50px */
+            height: 7.5rem;   /* ~120px */
+        }
         
-        .seat-present { @apply bg-emerald-600 text-white border-emerald-700 shadow-md ring-2 ring-emerald-300; }
+        /* 四聲部缺席顏色 */
+        .seat-absent-S { @apply bg-rose-50 border-rose-300 text-rose-800 hover:bg-rose-100/70; }
+        .seat-absent-A { @apply bg-amber-50 border-amber-300 text-amber-800 hover:bg-amber-100/70; }
+        .seat-absent-T { @apply bg-sky-50 border-sky-300 text-sky-800 hover:bg-sky-100/70; }
+        .seat-absent-B { @apply bg-violet-50 border-violet-300 text-violet-800 hover:bg-violet-100/70; }
+        
+        /* 現場出席點亮翡翠綠 */
+        .seat-present { @apply bg-emerald-600 text-white border-emerald-700 shadow-md ring-2 ring-emerald-300 hover:bg-emerald-700; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
@@ -71,7 +83,7 @@
     <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
 
         <!-- ================= 全新：現場平板三排式點名系統 ================= -->
-        <section class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100">
+        <section class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100 overflow-hidden">
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 border-b pb-4 gap-4">
                 <div class="flex items-center">
                     <div class="bg-emerald-100 text-emerald-700 w-10 h-10 rounded-xl flex items-center justify-center mr-3">
@@ -95,7 +107,7 @@
                 </div>
             </div>
 
-            <!-- 舞台舞台最前方指標 -->
+            <!-- 舞台最前方指標 -->
             <div class="max-w-3xl mx-auto mb-6 text-center">
                 <!-- 聖職/指揮/司琴席 -->
                 <div class="grid grid-cols-4 gap-2 max-w-xl mx-auto text-xs font-bold mb-4">
@@ -121,78 +133,80 @@
                 </div>
             </div>
 
-            <!-- 詩班三排座位實境視圖 -->
-            <div class="space-y-6 max-w-5xl mx-auto">
-                
-                <!-- 【第一排】女高(左)、女低(右) -->
-                <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
-                    <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第一排 (前排)</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <!-- 第一排 左邊 (女高音前排) -->
-                        <div>
-                            <div class="text-[10px] font-bold text-rose-500 mb-1 flex items-center justify-between">
-                                <span>女高音 (前)</span>
-                                <span class="opacity-50">Soprano R1</span>
+            <!-- 詩班三排座位實境視圖 (附帶防擠壓橫向滾動容器) -->
+            <div class="overflow-x-auto pb-4 no-scrollbar">
+                <div class="space-y-6 min-w-[760px] max-w-5xl mx-auto px-2">
+                    
+                    <!-- 【第一排】女高(左)、女低(右) -->
+                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
+                        <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第一排 (前排)</h3>
+                        <div class="grid grid-cols-2 gap-8">
+                            <!-- 第一排 左邊 (女高音前排) -->
+                            <div class="border-r border-dashed border-slate-200 pr-2">
+                                <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
+                                    <span>女高音 (前)</span>
+                                    <span class="opacity-50">Soprano R1</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row1-left"></div>
                             </div>
-                            <div class="grid grid-cols-4 gap-2" id="grid-row1-left"></div>
-                        </div>
-                        <!-- 第一排 右邊 (女低音前排) -->
-                        <div>
-                            <div class="text-[10px] font-bold text-amber-600 mb-1 flex items-center justify-between">
-                                <span>女低音 (前)</span>
-                                <span class="opacity-50">Alto R1</span>
+                            <!-- 第一排 右邊 (女低音前排) -->
+                            <div>
+                                <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
+                                    <span>女低音 (前)</span>
+                                    <span class="opacity-50">Alto R1</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row1-right"></div>
                             </div>
-                            <div class="grid grid-cols-4 gap-2" id="grid-row1-right"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 【第二排】女高(左)、女低(右) -->
-                <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
-                    <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第二排 (中排)</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <!-- 第二排 左邊 (女高音中排) -->
-                        <div>
-                            <div class="text-[10px] font-bold text-rose-500 mb-1 flex items-center justify-between">
-                                <span>女高音 (中)</span>
-                                <span class="opacity-50">Soprano R2</span>
-                            </div>
-                            <div class="grid grid-cols-4 gap-2" id="grid-row2-left"></div>
-                        </div>
-                        <!-- 第二排 右邊 (女低音中排) -->
-                        <div>
-                            <div class="text-[10px] font-bold text-amber-600 mb-1 flex items-center justify-between">
-                                <span>女低音 (中)</span>
-                                <span class="opacity-50">Alto R2</span>
-                            </div>
-                            <div class="grid grid-cols-4 gap-2" id="grid-row2-right"></div>
                         </div>
                     </div>
-                </div>
 
-                <!-- 【第三排】男高弟兄(左)、男低弟兄(右) -->
-                <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200">
-                    <h3 class="text-xs font-bold text-slate-500 mb-3 tracking-widest uppercase text-center">第三排 (後排 - 弟兄聲部)</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <!-- 第三排 左邊 (弟兄男高) -->
-                        <div>
-                            <div class="text-[10px] font-bold text-sky-600 mb-1 flex items-center justify-between">
-                                <span>弟兄男高音</span>
-                                <span class="opacity-50">Tenor R3</span>
+                    <!-- 【第二排】女高(左)、女低(右) -->
+                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
+                        <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第二排 (中排)</h3>
+                        <div class="grid grid-cols-2 gap-8">
+                            <!-- 第二排 左邊 (女高音中排) -->
+                            <div class="border-r border-dashed border-slate-200 pr-2">
+                                <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
+                                    <span>女高音 (中)</span>
+                                    <span class="opacity-50">Soprano R2</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row2-left"></div>
                             </div>
-                            <div class="grid grid-cols-4 gap-2" id="grid-row3-left"></div>
-                        </div>
-                        <!-- 第三排 右邊 (弟兄男低) -->
-                        <div>
-                            <div class="text-[10px] font-bold text-slate-600 mb-1 flex items-center justify-between">
-                                <span>弟兄男低音</span>
-                                <span class="opacity-50">Bass R3</span>
+                            <!-- 第二排 右邊 (女低音中排) -->
+                            <div>
+                                <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
+                                    <span>女低音 (中)</span>
+                                    <span class="opacity-50">Alto R2</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row2-right"></div>
                             </div>
-                            <div class="grid grid-cols-4 gap-2" id="grid-row3-right"></div>
                         </div>
                     </div>
-                </div>
 
+                    <!-- 【第三排】男高弟兄(左)、男低弟兄(右) -->
+                    <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200">
+                        <h3 class="text-xs font-bold text-slate-500 mb-3 tracking-widest uppercase text-center">第三排 (後排 - 弟兄聲部)</h3>
+                        <div class="grid grid-cols-2 gap-8">
+                            <!-- 第三排 左邊 (弟兄男高) -->
+                            <div class="border-r border-dashed border-slate-300 pr-2">
+                                <div class="text-[10px] font-bold text-sky-600 mb-2 flex items-center justify-between">
+                                    <span>弟兄男高音</span>
+                                    <span class="opacity-50">Tenor R3</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row3-left"></div>
+                            </div>
+                            <!-- 第三排 右邊 (弟兄男低) -->
+                            <div>
+                                <div class="text-[10px] font-bold text-violet-600 mb-2 flex items-center justify-between">
+                                    <span>弟兄男低音</span>
+                                    <span class="opacity-50">Bass R3</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2" id="grid-row3-right"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             <!-- 隱藏後台座位設定專區 -->
@@ -522,7 +536,7 @@
         function getDefaultLayout() {
             const layout = {};
             
-            // 女高音兩排，分佈在 Row 1 Left (8位) 與 Row 2 Left (7位)
+            // 女高音站左半部兩排，前排 (8位) 與中排 (7位)
             rawChoirMembers.soprano.forEach((name, idx) => {
                 if (idx < 8) {
                     layout[name] = { part: 'soprano', row: 1, side: 'left', index: idx + 1 };
@@ -531,7 +545,7 @@
                 }
             });
 
-            // 女低音兩排，分佈在 Row 1 Right (6位) 與 Row 2 Right (5位)
+            // 女低音站右半部兩排，前排 (6位) 與中排 (5位)
             rawChoirMembers.alto.forEach((name, idx) => {
                 if (idx < 6) {
                     layout[name] = { part: 'alto', row: 1, side: 'right', index: idx + 1 };
@@ -540,12 +554,12 @@
                 }
             });
 
-            // 男高音位於 Row 3 Left (9位)
+            // 男高音弟兄站左半部第三排 (9位)
             rawChoirMembers.tenor.forEach((name, idx) => {
                 layout[name] = { part: 'tenor', row: 3, side: 'left', index: idx + 1 };
             });
 
-            // 男低音位於 Row 3 Right (7位)
+            // 男低音弟兄站右半部第三排 (7位)
             rawChoirMembers.bass.forEach((name, idx) => {
                 layout[name] = { part: 'bass', row: 3, side: 'right', index: idx + 1 };
             });
@@ -613,12 +627,26 @@
                     if (isPresent) {
                         btn.className = "seat-btn seat-present";
                         const timeStr = logs[name].split(' ')[1] || '';
-                        btn.innerHTML = `<span>${name}</span><span class="text-[9px] opacity-75 font-normal mt-0.5">${timeStr.substring(0,5)} 已到</span>`;
+                        // 已簽到：大字直寫名字，下方橫寫報到時間
+                        btn.innerHTML = `
+                            <span class="vertical-name font-black text-sm tracking-widest leading-none mt-1">${name}</span>
+                            <span class="text-[9px] scale-90 bg-emerald-700 px-1 py-0.5 rounded leading-none mb-1 shadow-sm truncate w-10 text-center">${timeStr.substring(0,5)}</span>
+                        `;
                     } else {
-                        const partColors = { soprano: 'seat-absent-S', alto: 'seat-absent-A', tenor: 'seat-absent-T', bass: 'seat-absent-B' };
+                        // 四聲部缺席背景底色
+                        const partColors = { 
+                            soprano: 'seat-absent-S', 
+                            alto: 'seat-absent-A', 
+                            tenor: 'seat-absent-T', 
+                            bass: 'seat-absent-B' 
+                        };
                         const colorClass = partColors[member.part] || 'seat-absent-B';
                         btn.className = `seat-btn ${colorClass}`;
-                        btn.innerHTML = `<span>${name}</span><span class="text-[8px] opacity-40 font-normal mt-0.5">席位 ${member.index}</span>`;
+                        // 未簽到：大字直寫名字，下方橫寫座次序
+                        btn.innerHTML = `
+                            <span class="vertical-name font-black text-sm tracking-widest leading-none mt-1 opacity-90">${name}</span>
+                            <span class="text-[8px] opacity-40 leading-none mb-1.5 font-normal">席 ${member.index}</span>
+                        `;
                     }
 
                     btn.onclick = () => toggleAttendance(name);
@@ -676,7 +704,7 @@
             const layout = getSeatLayout();
             for (let name in layout) {
                 const rowVal = parseInt(document.getElementById(`admin-row-${name}`).value);
-                const sideVal = document.getElementById(`admin-side-${name}`).value;
+                const sideVal = document.getElementById(`grid-side-${name}` || `admin-side-${name}`).value;
                 const idxVal = parseInt(document.getElementById(`admin-idx-${name}`).value) || 1;
 
                 layout[name].row = rowVal;
