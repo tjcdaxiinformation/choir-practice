@@ -28,25 +28,27 @@
         .upcoming { @apply border-l-blue-500 shadow-sm; }
         .highlight { @apply border-l-amber-500 ring-2 ring-amber-200; }
 
-        /* 直立式站位姓名 */
+        /* 直立式站位姓名與間距優化 */
         .vertical-name {
             writing-mode: vertical-rl;
             text-orientation: upright;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.05em;
+            font-size: 0.75rem; /* 精緻縮小字體 */
+            line-height: 1.1;
         }
 
-        /* 詩班座位按鈕直立樣式與四聲部專屬底色 */
+        /* 詩班座位按鈕直立柱狀縮小樣式 */
         .seat-btn {
-            @apply flex flex-col items-center justify-between py-3 px-1 rounded-2xl border text-center font-bold transition-all duration-200 shadow-sm active:scale-90 select-none;
-            width: 3.125rem; /* ~50px */
-            height: 7.5rem;   /* ~120px */
+            @apply flex flex-col items-center justify-between py-2 px-0.5 rounded-xl border text-center font-bold transition-all duration-150 shadow-sm active:scale-90 select-none shrink-0;
+            width: 2.375rem; /* 縮小寬度至 ~38px */
+            height: 5.625rem; /* 縮小高度至 ~90px */
         }
         
         /* 四聲部缺席顏色 */
-        .seat-absent-S { @apply bg-rose-50 border-rose-300 text-rose-800 hover:bg-rose-100/70; }
-        .seat-absent-A { @apply bg-amber-50 border-amber-300 text-amber-800 hover:bg-amber-100/70; }
-        .seat-absent-T { @apply bg-sky-50 border-sky-300 text-sky-800 hover:bg-sky-100/70; }
-        .seat-absent-B { @apply bg-violet-50 border-violet-300 text-violet-800 hover:bg-violet-100/70; }
+        .seat-absent-S { @apply bg-rose-50 border-rose-200 text-rose-800 hover:bg-rose-100/70; }
+        .seat-absent-A { @apply bg-amber-50 border-amber-200 text-amber-800 hover:bg-amber-100/70; }
+        .seat-absent-T { @apply bg-sky-50 border-sky-200 text-sky-800 hover:bg-sky-100/70; }
+        .seat-absent-B { @apply bg-violet-50 border-violet-200 text-violet-800 hover:bg-violet-100/70; }
         
         /* 現場出席點亮綠色 */
         .seat-present { @apply bg-emerald-600 text-white border-emerald-700 shadow-md ring-2 ring-emerald-300 hover:bg-emerald-700; }
@@ -82,6 +84,7 @@
 
     <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
 
+        <!-- ================= STREAMING_CHUNK: Rendering attendance section... ================= -->
         <!-- ================= 現場平板三排式點名系統 (面向下方觀眾席) ================= -->
         <section class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100 overflow-hidden">
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 border-b pb-4 gap-4">
@@ -107,7 +110,7 @@
                 </div>
             </div>
 
-            <!-- ================= 全新：出席率即時統計看板 ================= -->
+            <!-- ================= 出席率即時統計看板 ================= -->
             <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
                 <!-- 全體總計 -->
                 <div class="bg-gradient-to-br from-slate-800 to-indigo-950 text-white p-4 rounded-2xl shadow-lg border border-slate-700/50 text-center flex flex-col justify-between min-h-[110px]">
@@ -141,80 +144,78 @@
                 </div>
             </div>
 
-            <!-- 詩班三排座位實境視圖 (上方為後排，下方為前排與觀眾席) -->
-            <div class="overflow-x-auto pb-4 no-scrollbar">
-                <div class="space-y-6 min-w-[760px] max-w-5xl mx-auto px-2">
-                    
-                    <!-- 【第三排】男高弟兄(左)、男低弟兄(右) - 在最上方 (後排) -->
-                    <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200">
-                        <h3 class="text-xs font-bold text-slate-500 mb-3 tracking-widest uppercase text-center">第三排 (後排 - 弟兄聲部)</h3>
-                        <div class="grid grid-cols-2 gap-8">
-                            <!-- 第三排 左邊 (弟兄男高) -->
-                            <div class="border-r border-dashed border-slate-300 pr-2">
-                                <div class="text-[10px] font-bold text-sky-600 mb-2 flex items-center justify-between">
-                                    <span>弟兄男高音</span>
-                                    <span class="opacity-50">Tenor R3</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row3-left"></div>
+            <!-- 詩班三排座位實境視圖 (強制一橫排不折行，支援平板左右滑動與縮放) -->
+            <div class="space-y-6 max-w-5xl mx-auto px-2">
+                
+                <!-- 【第三排】男高弟兄(左)、男低弟兄(右) - 在最上方 (後排) -->
+                <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 mb-3 tracking-widest uppercase text-center">第三排 (後排 - 弟兄聲部)</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- 第三排 左邊 (弟兄男高) -->
+                        <div class="border-r border-dashed border-slate-300 pr-2 overflow-x-auto no-scrollbar">
+                            <div class="text-[10px] font-bold text-sky-600 mb-2 flex items-center justify-between">
+                                <span>弟兄男高音</span>
+                                <span class="opacity-50">Tenor R3</span>
                             </div>
-                            <!-- 第三排 右邊 (弟兄男低) -->
-                            <div>
-                                <div class="text-[10px] font-bold text-violet-600 mb-2 flex items-center justify-between">
-                                    <span>弟兄男低音</span>
-                                    <span class="opacity-50">Bass R3</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row3-right"></div>
+                            <div class="flex flex-nowrap gap-1.5 pb-1" id="grid-row3-left"></div>
+                        </div>
+                        <!-- 第三排 右邊 (弟兄男低) -->
+                        <div class="overflow-x-auto no-scrollbar">
+                            <div class="text-[10px] font-bold text-violet-600 mb-2 flex items-center justify-between">
+                                <span>弟兄男低音</span>
+                                <span class="opacity-50">Bass R3</span>
                             </div>
+                            <div class="flex flex-nowrap gap-1.5 pb-1" id="grid-row3-right"></div>
                         </div>
                     </div>
-
-                    <!-- 【第二排】女高(左)、女低(right) - 在中間 (中排) -->
-                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
-                        <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第二排 (中排)</h3>
-                        <div class="grid grid-cols-2 gap-8">
-                            <!-- 第二排 左邊 (女高音中排) -->
-                            <div class="border-r border-dashed border-slate-200 pr-2">
-                                <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
-                                    <span>女高音 (中)</span>
-                                    <span class="opacity-50">Soprano R2</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row2-left"></div>
-                            </div>
-                            <!-- 第二排 右邊 (女低音中排) -->
-                            <div>
-                                <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
-                                    <span>女低音 (中)</span>
-                                    <span class="opacity-50">Alto R2</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row2-right"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 【第一排】女高(左)、女低(right) - 在最下方 (前排) -->
-                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
-                        <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第一排 (前排)</h3>
-                        <div class="grid grid-cols-2 gap-8">
-                            <!-- 第一排 左邊 (女高音前排) -->
-                            <div class="border-r border-dashed border-slate-200 pr-2">
-                                <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
-                                    <span>女高音 (前)</span>
-                                    <span class="opacity-50">Soprano R1</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row1-left"></div>
-                            </div>
-                            <!-- 第一排 右邊 (女低音前排) -->
-                            <div>
-                                <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
-                                    <span>女低音 (前)</span>
-                                    <span class="opacity-50">Alto R1</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2" id="grid-row1-right"></div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
+
+                <!-- 【第二排】女高(左)、女低(右) - 在中間 (中排) -->
+                <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
+                    <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第二排 (中排)</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- 第二排 左邊 (女高音中排) -->
+                        <div class="border-r border-dashed border-slate-200 pr-2 overflow-x-auto no-scrollbar">
+                            <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
+                                <span>女高音 (中)</span>
+                                <span class="opacity-50">Soprano R2</span>
+                            </div>
+                            <div class="flex flex-nowrap gap-1.5 pb-1" id="grid-row2-left"></div>
+                        </div>
+                        <!-- 第二排 右邊 (女低音中排) -->
+                        <div class="overflow-x-auto no-scrollbar">
+                            <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
+                                <span>女低音 (中)</span>
+                                <span class="opacity-50">Alto R2</span>
+                            </div>
+                            <div class="flex flex-nowrap gap-1.5 pb-1" id="grid-row2-right"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 【第一排】女高(left)、女低(right) - 在最下方 (前排) -->
+                <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200/60">
+                    <h3 class="text-xs font-bold text-slate-400 mb-3 tracking-widest uppercase text-center">第一排 (前排)</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- 第一排 左邊 (女高音前排) -->
+                        <div class="border-r border-dashed border-slate-200 pr-2 overflow-x-auto no-scrollbar">
+                            <div class="text-[10px] font-bold text-rose-500 mb-2 flex items-center justify-between">
+                                <span>女高音 (前)</span>
+                                <span class="opacity-50">Soprano R1</span>
+                            </div>
+                            <div class="flex flex-nowrap gap-1.5 pb-1" id="grid-row1-left"></div>
+                        </div>
+                        <!-- 第一排 右邊 (女低音前排) -->
+                        <div class="overflow-x-auto no-scrollbar">
+                            <div class="text-[10px] font-bold text-amber-600 mb-2 flex items-center justify-between">
+                                <span>女低音 (前)</span>
+                                <span class="opacity-50">Alto R1</span>
+                            </div>
+                            <div class="flex flex-nowrap gap-1.5 pb-1" id="grid-row1-right"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- 舞台最前方指標與指揮/司琴席 (移至最下方，面對觀眾席) -->
@@ -451,7 +452,8 @@
                                 <p class="text-lg font-bold text-white mb-2" id="album-status-title">前山牧區專屬雲端相簿</p>
                                 <p class="text-xs text-slate-300 mb-6 max-w-md">本次練習的所有合唱錄音與成果錄影，均已妥善備份至雲端相簿中，歡迎班員、指揮及司琴點擊前往觀看、上傳或下載複習！</p>
                                 <div class="flex flex-wrap justify-center gap-3">
-                                    <a id="cloud-album-link" href="https://photos.google.com" target="_blank" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 px-8 py-3 rounded-full font-black transition-all shadow-lg active:scale-95 flex items-center gap-2 text-sm">
+                                    <!-- 預設固定連結指向使用者專屬的 Google Photos 共享相簿 -->
+                                    <a id="cloud-album-link" href="https://photos.app.goo.gl/fWa4qXC6ZXffK4DT6" target="_blank" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 px-8 py-3 rounded-full font-black transition-all shadow-lg active:scale-95 flex items-center gap-2 text-sm">
                                         <i class="fas fa-external-link-alt"></i> 前往【雲端相簿】觀看影音
                                     </a>
                                     <button onclick="toggleConfigLink()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-3 rounded-full font-bold transition-all text-xs">
@@ -467,6 +469,7 @@
                                 <span><i class="fas fa-link mr-1"></i> 指揮/管理員設定專區</span>
                                 <button onclick="toggleConfigLink()" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
                             </h4>
+                            <p class="text-[11px] text-slate-400 mb-3">請在下方貼上您們新的 Google 雲端硬碟、Google 相簿或其它共享連結：</p>
                             <input type="text" id="album-url-input" placeholder="https://..." class="w-full bg-slate-950 border border-white/20 rounded-xl px-3 py-2 text-xs text-white mb-2 focus:outline-none focus:border-amber-400">
                             <button onclick="saveAlbumUrl()" class="w-full bg-amber-500 text-slate-950 font-bold py-1.5 rounded-lg text-xs hover:bg-amber-600 transition-colors">儲存並更新連結</button>
                         </div>
@@ -557,17 +560,6 @@
             ]
         };
 
-        // 倒數計時
-        function updateCountdown() {
-            const targetDate = new Date('November 1, 2026 00:00:00').getTime();
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            document.getElementById('days').innerText = days > 0 ? days : 0;
-        }
-        setInterval(updateCountdown, 1000 * 60);
-        updateCountdown();
-
         // 建立預設座位排序 layout 對照表
         function getDefaultLayout() {
             const layout = {};
@@ -624,7 +616,6 @@
                 total: { present: 0, total: 0 }
             };
 
-            // 比對 logs 計算各聲部出席人數
             for (let part in rawChoirMembers) {
                 rawChoirMembers[part].forEach(name => {
                     if (logs[name]) {
@@ -633,11 +624,9 @@
                 });
             }
 
-            // 加總全體
             stats.total.total = stats.soprano.total + stats.alto.total + stats.tenor.total + stats.bass.total;
             stats.total.present = stats.soprano.present + stats.alto.present + stats.tenor.present + stats.bass.present;
 
-            // 動態渲染至五張看板卡片上
             const keys = ['total', 'soprano', 'alto', 'tenor', 'bass'];
             keys.forEach(key => {
                 const pctEl = document.getElementById(`stat-${key}-pct`);
@@ -656,10 +645,8 @@
             const logs = getAttendanceLogs();
             const layout = getSeatLayout();
 
-            // 即時更新出席率統計看板
             updateLiveStatistics(logs);
 
-            // 定義需要清空的 grid 容器
             const grids = {
                 'row1-left': document.getElementById('grid-row1-left'),
                 'row1-right': document.getElementById('grid-row1-right'),
@@ -669,19 +656,16 @@
                 'row3-right': document.getElementById('grid-row3-right')
             };
 
-            // 清空舊 HTML
             for (let key in grids) {
                 if (grids[key]) grids[key].innerHTML = "";
             }
 
-            // 將班員分類裝箱
             const categorised = {
                 'row1-left': [], 'row1-right': [],
                 'row2-left': [], 'row2-right': [],
                 'row3-left': [], 'row3-right': []
             };
 
-            // 讀取每位班員的位置並丟入箱中
             for (let name in layout) {
                 const config = layout[name];
                 const key = `row${config.row}-${config.side}`;
@@ -690,11 +674,9 @@
                 }
             }
 
-            // 依據 index 進行大小排序呈現
             for (let key in categorised) {
                 categorised[key].sort((a, b) => a.index - b.index);
                 
-                // 開始渲染
                 categorised[key].forEach(member => {
                     const name = member.name;
                     const isPresent = !!logs[name];
@@ -704,8 +686,8 @@
                         btn.className = "seat-btn seat-present";
                         const timeStr = logs[name].split(' ')[1] || '';
                         btn.innerHTML = `
-                            <span class="vertical-name font-black text-sm tracking-widest leading-none mt-1">${name}</span>
-                            <span class="text-[9px] scale-90 bg-emerald-700 px-1 py-0.5 rounded leading-none mb-1 shadow-sm truncate w-10 text-center">${timeStr.substring(0,5)}</span>
+                            <span class="vertical-name font-black text-[11px] tracking-wider leading-none mt-1">${name}</span>
+                            <span class="text-[8px] scale-90 bg-emerald-700 px-0.5 py-0.5 rounded leading-none mb-0.5 shadow-sm truncate w-8 text-center">${timeStr.substring(0,5)}</span>
                         `;
                     } else {
                         const partColors = { 
@@ -717,8 +699,8 @@
                         const colorClass = partColors[member.part] || 'seat-absent-B';
                         btn.className = `seat-btn ${colorClass}`;
                         btn.innerHTML = `
-                            <span class="vertical-name font-black text-sm tracking-widest leading-none mt-1 opacity-90">${name}</span>
-                            <span class="text-[8px] opacity-40 leading-none mb-1.5 font-normal">席 ${member.index}</span>
+                            <span class="vertical-name font-black text-[11px] tracking-wider leading-none mt-1 opacity-95">${name}</span>
+                            <span class="text-[8px] opacity-30 leading-none mb-1 font-normal scale-90">席 ${member.index}</span>
                         `;
                     }
 
@@ -727,7 +709,6 @@
                 });
             }
 
-            // 渲染後台編輯清單
             const adminContainer = document.getElementById('admin-member-list');
             adminContainer.innerHTML = "";
 
@@ -889,7 +870,7 @@
                     <div class="space-y-3 leading-loose text-base md:text-lg">
                         <p class="text-amber-800">1. (首段主旋律)</p>
                         <p class="font-bold">5  |  3 . 4  5  5  |  i .  i  7  5  |  6 . 7  i  6  |  5 - -</p>
-                        <p class="text-xs text-slate-400">（ 靠   主   常  喜 樂    主  愛  滿 溢 我 心  賜  我  們  自 由  免 罪 債 ）</p>
+                        <p class="text-xs text-slate-400">（ 靠   主   常  喜 樂    主  愛  滿 溢 我 心  賜  我  門  自 由  免 罪 債 ）</p>
                     </div>
                 `,
                 pdfUrl: "https://sacredmusic.tjc.org.tw/hymn/370",
@@ -935,12 +916,15 @@
             }
         };
 
+        // 初始化與讀取設定
         window.addEventListener('DOMContentLoaded', () => {
+            const defaultUrl = "https://photos.app.goo.gl/fWa4qXC6ZXffK4DT6";
             const savedUrl = localStorage.getItem('choir_album_url');
-            if (savedUrl) {
-                document.getElementById('cloud-album-link').href = savedUrl;
-                document.getElementById('album-url-input').value = savedUrl;
-            }
+            const targetUrl = savedUrl || defaultUrl;
+            
+            document.getElementById('cloud-album-link').href = targetUrl;
+            document.getElementById('album-url-input').value = targetUrl;
+            
             renderAttendanceAndAdmin();
         });
 
